@@ -1,0 +1,721 @@
+<!DOCTYPE html>
+<html lang="id" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Website Kerajinan Kayu RT 03 - Meja & Kursi Pak Kusnan</title>
+    <!-- Menggunakan Tailwind CSS CDN Standar -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Font Awesome untuk icon-icon sederhana -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* Menggunakan font standar agar terlihat seperti buatan sendiri yang rapi */
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+    </style>
+</head>
+<body class="bg-amber-50 text-neutral-800">
+
+    <!-- ========================================== -->
+    <!-- BAGIAN NAVIGATION BAR (MENU ATAS)          -->
+    <!-- ========================================== -->
+    <header class="bg-white shadow-sm sticky top-0 z-50">
+        <div class="max-w-6xl mx-auto px-4 py-4 flex items-center justify-between">
+            <!-- Nama Website / Logo Sederhana -->
+            <a href="#" class="flex items-center gap-2 text-amber-850 text-xl font-bold text-amber-900">
+                <i class="fa-solid fa-hammer"></i>
+                <span>MebelPakKusnan</span>
+            </a>
+            
+            <!-- Menu navigasi untuk layar laptop -->
+            <nav class="hidden md:flex items-center gap-6 font-medium text-neutral-600">
+                <a href="#beranda" class="hover:text-amber-800 transition">Beranda</a>
+                <a href="#tentang" class="hover:text-amber-800 transition">Tentang Kami</a>
+                <a href="#produk" class="hover:text-amber-800 transition">Produk</a>
+                <a href="#proses" class="hover:text-amber-800 transition">Proses Kerja</a>
+                <a href="#kalkulator" class="hover:text-amber-800 transition">Kalkulator Harga</a>
+                <a href="#kontak" class="bg-amber-800 text-white px-4 py-2 rounded-lg hover:bg-amber-905 hover:bg-amber-900 transition">Hubungi</a>
+            </nav>
+
+            <!-- Tombol Menu untuk pengguna Handphone -->
+            <button id="btn-menu-hp" class="md:hidden text-2xl text-neutral-700">
+                <i class="fa-solid fa-bars"></i>
+            </button>
+        </div>
+
+        <!-- Tampilan Menu Handphone (Muncul jika diklik) -->
+        <div id="menu-hp" class="hidden md:hidden bg-white border-t px-4 py-3 space-y-2">
+            <a href="#beranda" class="block py-2 text-neutral-700 hover:text-amber-800 font-medium">Beranda</a>
+            <a href="#tentang" class="block py-2 text-neutral-700 hover:text-amber-800 font-medium">Tentang Kami</a>
+            <a href="#produk" class="block py-2 text-neutral-700 hover:text-amber-800 font-medium">Produk</a>
+            <a href="#proses" class="block py-2 text-neutral-700 hover:text-amber-800 font-medium">Proses Kerja</a>
+            <a href="#kalkulator" class="block py-2 text-neutral-700 hover:text-amber-800 font-medium">Kalkulator Harga</a>
+            <a href="#kontak" class="block py-2 text-center bg-amber-800 text-white rounded-lg">Hubungi Kami</a>
+        </div>
+    </header>
+
+    <!-- ========================================== -->
+    <!-- BAGIAN HERO (HALAMAN DEPAN/UTAMA)          -->
+    <!-- ========================================== -->
+    <section id="beranda" class="py-16 bg-gradient-to-b from-amber-100 to-amber-50">
+        <div class="max-w-6xl mx-auto px-4 grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+            
+            <!-- Sisi Teks Selamat Datang -->
+            <div class="space-y-6 text-center md:text-left">
+                <span class="bg-amber-200 text-amber-900 text-xs font-semibold px-3 py-1 rounded-full">
+                    Tugas Mandiri Website Lingkungan Sekitar
+                </span>
+                <h1 class="text-3xl md:text-5xl font-extrabold text-neutral-900 leading-tight">
+                    Kerajinan Meja & Kursi Kayu Asli RT 03 RW 01
+                </h1>
+                <p class="text-neutral-600 text-base leading-relaxed">
+                    Selamat datang di website profil usaha kerajinan kayu lokal di lingkungan sekitar tempat tinggal saya. Kami membantu mempromosikan hasil produksi meja dan kursi berkualitas karya Pak Kusnan, tetangga kami sendiri.
+                </p>
+                <div class="flex flex-col sm:flex-row gap-3 justify-center md:justify-start">
+                    <a href="#produk" class="bg-amber-800 text-white px-6 py-3 rounded-lg font-semibold hover:bg-amber-900 shadow transition text-center">
+                        <i class="fa-solid fa-eye mr-2"></i>Lihat Katalog Produk
+                    </a>
+                    <a href="#kalkulator" class="bg-white border border-amber-300 text-amber-900 px-6 py-3 rounded-lg font-semibold hover:bg-amber-100 transition text-center">
+                        Coba Kalkulator Kustom
+                    </a>
+                </div>
+            </div>
+
+            <!-- Sisi Gambar / Ilustrasi Sederhana -->
+            <div class="flex justify-center">
+                <div class="bg-white p-6 rounded-2xl border-2 border-amber-200 shadow-md max-w-sm w-full text-center">
+                    <div class="text-6xl my-4 text-amber-700">
+                        <i class="fa-solid fa-couch"></i>
+                    </div>
+                    <h3 class="font-bold text-lg text-neutral-900">Bengkel Kayu Pak Kusnan</h3>
+                    <p class="text-sm text-neutral-500 mt-2">Menyediakan berbagai macam furnitur kayu seperti meja makan, meja belajar, kursi teras, hingga kursi cafe dengan harga bersahabat tetangga.</p>
+                    <div class="mt-4 pt-4 border-t border-dashed border-amber-200 text-xs text-amber-800 font-semibold">
+                        <i class="fa-solid fa-location-dot mr-1"></i> RT 03 RW 01 Kelurahan Indah
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- ========================================== -->
+    <!-- BAGIAN TENTANG KAMI                        -->
+    <!-- ========================================== -->
+    <section id="tentang" class="py-16 bg-white">
+        <div class="max-w-5xl mx-auto px-4">
+            <div class="text-center space-y-3 mb-12">
+                <h2 class="text-2xl md:text-3xl font-bold text-neutral-900">Mengenal Usaha Kerajinan Lokal Kami</h2>
+                <div class="w-20 h-1 bg-amber-700 mx-auto rounded"></div>
+                <p class="text-neutral-500 text-sm max-w-xl mx-auto">
+                    Website ini dibuat untuk memenuhi tugas sekaligus mendukung pengembangan usaha mikro kecil menengah (UMKM) mandiri milik tetangga kami sendiri.
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <!-- Poin 1 -->
+                <div class="p-6 bg-amber-50 rounded-xl border border-amber-200 text-center">
+                    <div class="text-3xl text-amber-800 mb-3"><i class="fa-solid fa-tree"></i></div>
+                    <h3 class="font-bold text-lg text-neutral-900 mb-2">Bahan Kayu Pilihan</h3>
+                    <p class="text-sm text-neutral-600 leading-relaxed">
+                        Menggunakan kayu jati, mahoni, dan pinus pilihan yang dipotong langsung di perkebunan rakyat yang sah.
+                    </p>
+                </div>
+                <!-- Poin 2 -->
+                <div class="p-6 bg-amber-50 rounded-xl border border-amber-200 text-center">
+                    <div class="text-3xl text-amber-800 mb-3"><i class="fa-solid fa-hammer"></i></div>
+                    <h3 class="font-bold text-lg text-neutral-900 mb-2">Pengerjaan Manual</h3>
+                    <p class="text-sm text-neutral-600 leading-relaxed">
+                        Dibuat dengan keterampilan tangan secara teliti untuk menghasilkan sambungan struktur kayu yang rapi dan kuat.
+                    </p>
+                </div>
+                <!-- Poin 3 -->
+                <div class="p-6 bg-amber-50 rounded-xl border border-amber-200 text-center">
+                    <div class="text-3xl text-amber-800 mb-3"><i class="fa-solid fa-handshake"></i></div>
+                    <h3 class="font-bold text-lg text-neutral-900 mb-2">Harga Bersahabat</h3>
+                    <p class="text-sm text-neutral-600 leading-relaxed">
+                        Karena diproduksi langsung di lingkungan perumahan kita sendiri, harga produk dijamin lebih murah tanpa biaya perantara.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ========================================== -->
+    <!-- BAGIAN PRODUK (DENGAN TOMBOL FILTER JS)    -->
+    <!-- ========================================== -->
+    <section id="produk" class="py-16 bg-amber-50">
+        <div class="max-w-6xl mx-auto px-4">
+            
+            <div class="text-center space-y-3 mb-10">
+                <h2 class="text-2xl md:text-3xl font-bold text-neutral-900">Katalog Meja & Kursi</h2>
+                <div class="w-20 h-1 bg-amber-700 mx-auto rounded"></div>
+                <p class="text-neutral-500 text-sm max-w-md mx-auto">
+                    Beberapa contoh model produk yang sudah pernah dibuat oleh bengkel Pak Kusnan.
+                </p>
+                
+                <!-- Menu Filter Sederhana -->
+                <div class="flex justify-center gap-2 pt-4">
+                    <button onclick="saringKoleksi('semua')" id="filter-semua" class="btn-filter px-4 py-1.5 text-xs sm:text-sm font-semibold rounded bg-amber-800 text-white shadow">Semua</button>
+                    <button onclick="saringKoleksi('meja')" id="filter-meja" class="btn-filter px-4 py-1.5 text-xs sm:text-sm font-semibold rounded bg-white text-neutral-700 border hover:bg-amber-100">Meja</button>
+                    <button onclick="saringKoleksi('kursi')" id="filter-kursi" class="btn-filter px-4 py-1.5 text-xs sm:text-sm font-semibold rounded bg-white text-neutral-700 border hover:bg-amber-100">Kursi</button>
+                </div>
+            </div>
+
+            <!-- Grid Tampilan Item Produk -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6" id="wadah-produk">
+                
+                <!-- Meja Makan -->
+                <div class="kartu-produk bg-white p-4 rounded-xl border border-amber-200 shadow-sm" data-jenis="meja">
+                    <div class="h-40 bg-amber-100 rounded-lg flex items-center justify-center text-5xl text-amber-800">
+                        <i class="fa-solid fa-table"></i>
+                    </div>
+                    <div class="mt-4 space-y-2">
+                        <span class="text-xs font-bold text-amber-800 uppercase">Kategori: Meja</span>
+                        <h3 class="font-bold text-neutral-900 text-lg">Meja Makan Kayu Jati</h3>
+                        <p class="text-xs text-neutral-500">Meja makan keluarga berkapasitas 4 hingga 6 kursi, menggunakan lapisan anti rayap dan air.</p>
+                        <div class="border-t border-amber-100 pt-3 flex items-center justify-between">
+                            <div>
+                                <span class="text-[10px] text-neutral-400 font-bold block leading-none">Harga Mulai</span>
+                                <span class="text-amber-800 font-bold text-base">Rp 1.500.000</span>
+                            </div>
+                            <a href="#kontak" onclick="pilihOrderan('Meja Makan Kayu Jati')" class="bg-amber-100 text-amber-900 px-3 py-1.5 rounded text-xs font-semibold hover:bg-amber-800 hover:text-white transition">Pesan</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Kursi Makan -->
+                <div class="kartu-produk bg-white p-4 rounded-xl border border-amber-200 shadow-sm" data-jenis="kursi">
+                    <div class="h-40 bg-amber-100 rounded-lg flex items-center justify-center text-5xl text-amber-800">
+                        <i class="fa-solid fa-chair"></i>
+                    </div>
+                    <div class="mt-4 space-y-2">
+                        <span class="text-xs font-bold text-amber-800 uppercase">Kategori: Kursi</span>
+                        <h3 class="font-bold text-neutral-900 text-lg">Kursi Makan Scandinavian</h3>
+                        <p class="text-xs text-neutral-500">Kursi kayu mahoni minimalis yang cocok dipadukan dengan meja makan tipe apapun.</p>
+                        <div class="border-t border-amber-100 pt-3 flex items-center justify-between">
+                            <div>
+                                <span class="text-[10px] text-neutral-400 font-bold block leading-none">Harga Mulai</span>
+                                <span class="text-amber-800 font-bold text-base">Rp 350.000</span>
+                            </div>
+                            <a href="#kontak" onclick="pilihOrderan('Kursi Makan Scandinavian')" class="bg-amber-100 text-amber-900 px-3 py-1.5 rounded text-xs font-semibold hover:bg-amber-800 hover:text-white transition">Pesan</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Meja Belajar -->
+                <div class="kartu-produk bg-white p-4 rounded-xl border border-amber-200 shadow-sm" data-jenis="meja">
+                    <div class="h-40 bg-amber-100 rounded-lg flex items-center justify-center text-5xl text-amber-800">
+                        <i class="fa-solid fa-desktop"></i>
+                    </div>
+                    <div class="mt-4 space-y-2">
+                        <span class="text-xs font-bold text-amber-800 uppercase">Kategori: Meja</span>
+                        <h3 class="font-bold text-neutral-900 text-lg">Meja Belajar / Kerja Minimalis</h3>
+                        <p class="text-xs text-neutral-500">Dilengkapi dengan rak laci kecil untuk meletakkan alat tulis maupun laptop.</p>
+                        <div class="border-t border-amber-100 pt-3 flex items-center justify-between">
+                            <div>
+                                <span class="text-[10px] text-neutral-400 font-bold block leading-none">Harga Mulai</span>
+                                <span class="text-amber-800 font-bold text-base">Rp 950.000</span>
+                            </div>
+                            <a href="#kontak" onclick="pilihOrderan('Meja Belajar Minimalis')" class="bg-amber-100 text-amber-900 px-3 py-1.5 rounded text-xs font-semibold hover:bg-amber-800 hover:text-white transition">Pesan</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Kursi Bar -->
+                <div class="kartu-produk bg-white p-4 rounded-xl border border-amber-200 shadow-sm" data-jenis="kursi">
+                    <div class="h-40 bg-amber-100 rounded-lg flex items-center justify-center text-5xl text-amber-800">
+                        <i class="fa-solid fa-utensils"></i>
+                    </div>
+                    <div class="mt-4 space-y-2">
+                        <span class="text-xs font-bold text-amber-800 uppercase">Kategori: Kursi</span>
+                        <h3 class="font-bold text-neutral-900 text-lg">Kursi Tinggi Cafe (Bar Stool)</h3>
+                        <p class="text-xs text-neutral-500">Kursi tinggi tanpa sandaran yang biasa digunakan pada mini bar dapur atau kafe.</p>
+                        <div class="border-t border-amber-100 pt-3 flex items-center justify-between">
+                            <div>
+                                <span class="text-[10px] text-neutral-400 font-bold block leading-none">Harga Mulai</span>
+                                <span class="text-amber-800 font-bold text-base">Rp 400.000</span>
+                            </div>
+                            <a href="#kontak" onclick="pilihOrderan('Kursi Tinggi Cafe')" class="bg-amber-100 text-amber-900 px-3 py-1.5 rounded text-xs font-semibold hover:bg-amber-800 hover:text-white transition">Pesan</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Meja Kopi -->
+                <div class="kartu-produk bg-white p-4 rounded-xl border border-amber-200 shadow-sm" data-jenis="meja">
+                    <div class="h-40 bg-amber-100 rounded-lg flex items-center justify-center text-5xl text-amber-800">
+                        <i class="fa-solid fa-mug-hot"></i>
+                    </div>
+                    <div class="mt-4 space-y-2">
+                        <span class="text-xs font-bold text-amber-800 uppercase">Kategori: Meja</span>
+                        <h3 class="font-bold text-neutral-900 text-lg">Meja Kopi Bulat</h3>
+                        <p class="text-xs text-neutral-500">Meja bulat berukuran kecil untuk ruang santai depan rumah bersama keluarga.</p>
+                        <div class="border-t border-amber-100 pt-3 flex items-center justify-between">
+                            <div>
+                                <span class="text-[10px] text-neutral-400 font-bold block leading-none">Harga Mulai</span>
+                                <span class="text-amber-800 font-bold text-base">Rp 600.000</span>
+                            </div>
+                            <a href="#kontak" onclick="pilihOrderan('Meja Kopi Bulat')" class="bg-amber-100 text-amber-900 px-3 py-1.5 rounded text-xs font-semibold hover:bg-amber-800 hover:text-white transition">Pesan</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Kursi Teras -->
+                <div class="kartu-produk bg-white p-4 rounded-xl border border-amber-200 shadow-sm" data-jenis="kursi">
+                    <div class="h-40 bg-amber-100 rounded-lg flex items-center justify-center text-5xl text-amber-800">
+                        <i class="fa-solid fa-tree-city"></i>
+                    </div>
+                    <div class="mt-4 space-y-2">
+                        <span class="text-xs font-bold text-amber-800 uppercase">Kategori: Kursi</span>
+                        <h3 class="font-bold text-neutral-900 text-lg">Kursi Teras Klasik</h3>
+                        <p class="text-xs text-neutral-500">Sangat kuat ditaruh di area outdoor karena kayunya tebal dan dilapisi pelindung luar ruangan.</p>
+                        <div class="border-t border-amber-100 pt-3 flex items-center justify-between">
+                            <div>
+                                <span class="text-[10px] text-neutral-400 font-bold block leading-none">Harga Mulai</span>
+                                <span class="text-amber-800 font-bold text-base">Rp 450.000</span>
+                            </div>
+                            <a href="#kontak" onclick="pilihOrderan('Kursi Teras Klasik')" class="bg-amber-100 text-amber-900 px-3 py-1.5 rounded text-xs font-semibold hover:bg-amber-800 hover:text-white transition">Pesan</a>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+    </section>
+
+    <!-- ========================================== -->
+    <!-- BAGIAN PROSES PEMBUATAN                    -->
+    <!-- ========================================== -->
+    <section id="proses" class="py-16 bg-white">
+        <div class="max-w-5xl mx-auto px-4">
+            
+            <div class="text-center space-y-3 mb-12">
+                <h2 class="text-2xl md:text-3xl font-bold text-neutral-900">Alur Pengerjaan Kayu</h2>
+                <div class="w-20 h-1 bg-amber-700 mx-auto rounded"></div>
+                <p class="text-neutral-500 text-sm">Bagaimana kami mengolah balok mentah hingga menjadi perabot yang mengkilap.</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-6 text-center">
+                <!-- Tahap 1 -->
+                <div class="space-y-2">
+                    <div class="w-12 h-12 bg-amber-100 text-amber-900 text-xl font-bold rounded-full flex items-center justify-center mx-auto">1</div>
+                    <h3 class="font-bold text-neutral-900">Pilih Kayu</h3>
+                    <p class="text-xs text-neutral-500">Memilih kayu berumur tua agar awet, tidak melengkung, dan memiliki pola serat bagus.</p>
+                </div>
+                <!-- Tahap 2 -->
+                <div class="space-y-2">
+                    <div class="w-12 h-12 bg-amber-100 text-amber-900 text-xl font-bold rounded-full flex items-center justify-center mx-auto">2</div>
+                    <h3 class="font-bold text-neutral-900">Potong & Serut</h3>
+                    <p class="text-xs text-neutral-500">Merapikan permukaan kayu dengan mesin serut tangan hingga benar-benar halus.</p>
+                </div>
+                <!-- Tahap 3 -->
+                <div class="space-y-2">
+                    <div class="w-12 h-12 bg-amber-100 text-amber-900 text-xl font-bold rounded-full flex items-center justify-center mx-auto">3</div>
+                    <h3 class="font-bold text-neutral-900">Rakit Kerangka</h3>
+                    <p class="text-xs text-neutral-500">Merangkai bagian-bagian furnitur dengan lem berkualitas tinggi dan baut penyangga tersembunyi.</p>
+                </div>
+                <!-- Tahap 4 -->
+                <div class="space-y-2">
+                    <div class="w-12 h-12 bg-amber-800 text-white text-xl font-bold rounded-full flex items-center justify-center mx-auto">4</div>
+                    <h3 class="font-bold text-neutral-900">Poles Akhir</h3>
+                    <p class="text-xs text-neutral-500">Amplas tahap akhir dan pemberian lapisan pelindung transparan melamine natural.</p>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- ========================================== -->
+    <!-- SEKSI INTERAKTIF: KALKULATOR HARGA KUSTOM  -->
+    <!-- ========================================== -->
+    <section id="kalkulator" class="py-16 bg-neutral-900 text-white">
+        <div class="max-w-4xl mx-auto px-4">
+            
+            <div class="text-center space-y-3 mb-10">
+                <h2 class="text-2xl md:text-3xl font-bold">Simulator Hitung Estimasi Harga</h2>
+                <p class="text-neutral-400 text-sm">Jika Anda punya kebutuhan ukuran kustom sendiri, coba hitung perkiraan harganya di bawah ini.</p>
+            </div>
+
+            <!-- Form Simulator -->
+            <div class="bg-white text-neutral-800 p-6 rounded-2xl shadow-lg max-w-xl mx-auto">
+                <div class="space-y-4">
+                    
+                    <!-- Pilihan Tipe -->
+                    <div>
+                        <label class="block text-sm font-semibold text-neutral-700 mb-1">Pilih Model Furnitur</label>
+                        <select id="sim-tipe" onchange="hitungHarga()" class="w-full p-2.5 rounded border border-neutral-350 bg-neutral-50 text-sm">
+                            <option value="meja">Meja Panjang</option>
+                            <option value="kursi">Kursi Standar</option>
+                        </select>
+                    </div>
+
+                    <!-- Pilihan Kayu -->
+                    <div>
+                        <label class="block text-sm font-semibold text-neutral-700 mb-1">Pilih Jenis Kayu</label>
+                        <select id="sim-kayu" onchange="hitungHarga()" class="w-full p-2.5 rounded border border-neutral-350 bg-neutral-50 text-sm">
+                            <option value="pinus">Kayu Pinus (Paling Ekonomis)</option>
+                            <option value="mahoni">Kayu Mahoni (Sedang & Halus)</option>
+                            <option value="jati">Kayu Jati (Sangat Kuat & Mewah)</option>
+                        </select>
+                    </div>
+
+                    <!-- Input Panjang (Khusus Meja) -->
+                    <div id="sim-box-panjang">
+                        <div class="flex justify-between items-center text-sm font-semibold text-neutral-700 mb-1">
+                            <span>Panjang Meja (cm)</span>
+                            <span id="panjang-teks" class="bg-amber-100 text-amber-900 px-2 py-0.5 rounded text-xs">120 cm</span>
+                        </div>
+                        <input type="range" id="sim-panjang" min="60" max="220" value="120" step="10" oninput="ubahUkuranPanjang(this.value)" class="w-full accent-amber-850 accent-amber-800">
+                        <div class="flex justify-between text-[10px] text-neutral-400 mt-1">
+                            <span>60 cm (Minimal)</span>
+                            <span>220 cm (Maksimal)</span>
+                        </div>
+                    </div>
+
+                    <!-- Box Hasil Estimasi -->
+                    <div class="bg-amber-50 border border-amber-200 p-4 rounded-xl text-center">
+                        <p class="text-xs text-neutral-500 font-bold uppercase tracking-wider">Perkiraan Biaya Produksi</p>
+                        <p class="text-2xl font-extrabold text-amber-900 mt-1" id="sim-hasil">Rp 0</p>
+                        <p class="text-[10px] text-neutral-400 mt-1">*Harga dapat berubah menyesuaikan tingkat kerumitan tambahan kaki/laci.</p>
+                    </div>
+
+                    <!-- Tombol Pesan Langsung -->
+                    <button onclick="kirimLewatKalkulator()" class="w-full bg-amber-800 text-white font-bold py-3 px-4 rounded-lg hover:bg-amber-900 transition flex items-center justify-center gap-2 text-sm">
+                        <i class="fa-brands fa-whatsapp"></i> Ajukan Desain Ini ke WhatsApp Pengrajin
+                    </button>
+
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- ========================================== -->
+    <!-- BAGIAN FORMULIR KONTAK & ALAMAT            -->
+    <!-- ========================================== -->
+    <section id="kontak" class="py-16 bg-white">
+        <div class="max-w-5xl mx-auto px-4">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-10">
+                
+                <!-- Info Bengkel & Alamat -->
+                <div class="space-y-6">
+                    <h2 class="text-2xl md:text-3xl font-bold text-neutral-900">Kontak Pengrajin</h2>
+                    <div class="w-16 h-1 bg-amber-700 rounded"></div>
+                    <p class="text-neutral-600 text-sm">
+                        Jangan ragu untuk mampir ke workshop kami sekadar untuk melihat sampel jenis kayu atau berkonsultasi mengenai desain meja kursi impian Anda.
+                    </p>
+
+                    <div class="space-y-3 text-sm text-neutral-600">
+                        <div class="flex items-start gap-3">
+                            <span class="text-amber-800"><i class="fa-solid fa-map-location-dot"></i></span>
+                            <div>
+                                <p class="font-bold text-neutral-900">Alamat Tempat Kerja</p>
+                                <p>Jl. Pembangunan No. 12, RT 03/RW 01, Kelurahan Indah, Kecamatan Makmur (Pas di belakang balai desa RT 03)</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start gap-3">
+                            <span class="text-amber-800"><i class="fa-solid fa-phone"></i></span>
+                            <div>
+                                <p class="font-bold text-neutral-900">WhatsApp / HP</p>
+                                <p>0812-3456-7890 (Pak Kusnan)</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start gap-3">
+                            <span class="text-amber-800"><i class="fa-solid fa-envelope"></i></span>
+                            <div>
+                                <p class="font-bold text-neutral-900">Email Korespondensi</p>
+                                <p>senikayulokal@gmail.com</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Sketsa Map Sederhana -->
+                    <div class="border p-4 rounded-xl bg-amber-50">
+                        <div class="text-xs font-bold text-amber-900 mb-2">Petunjuk Menuju RT 03</div>
+                        <div class="h-28 bg-neutral-200 rounded relative overflow-hidden flex items-center justify-center text-xs font-semibold text-neutral-500">
+                            <!-- Garis Jalan Raya Sederhana -->
+                            <div class="absolute h-4 w-full bg-white top-1/2 -translate-y-1/2"></div>
+                            <div class="absolute w-4 h-full bg-white left-1/3"></div>
+                            <span class="absolute top-3 left-4 text-[10px]">Kantor Balai Desa</span>
+                            <span class="absolute bottom-3 right-10 text-[10px]">Pos Ronda Utama</span>
+                            <!-- Marker -->
+                            <div class="absolute top-1/3 left-1/3 text-center -translate-x-1/2 -translate-y-1/2">
+                                <div class="text-amber-800 text-lg animate-bounce"><i class="fa-solid fa-location-dot"></i></div>
+                                <span class="bg-white text-[9px] px-1 rounded shadow block mt-1">Bengkel Kayu</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Formulir Kontak Sederhana -->
+                <div class="bg-amber-50 p-6 rounded-2xl border border-amber-200">
+                    <h3 class="text-lg font-bold text-neutral-900 mb-2">Formulir Kirim Pesan Kustom</h3>
+                    <p class="text-xs text-neutral-500 mb-4">Anda juga bisa mengirimkan spesifikasi pesanan melalui isian form berikut.</p>
+                    
+                    <form onsubmit="kirimFormulir(event)" id="kontak-form" class="space-y-4">
+                        <div>
+                            <label class="block text-xs font-bold text-neutral-700 uppercase mb-1">Nama Lengkap</label>
+                            <input type="text" id="k-nama" required class="w-full p-2.5 rounded border border-neutral-300 text-sm bg-white" placeholder="Contoh: Budi Santoso">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-bold text-neutral-700 uppercase mb-1">Nomor WhatsApp Anda</label>
+                            <input type="tel" id="k-telp" required class="w-full p-2.5 rounded border border-neutral-300 text-sm bg-white" placeholder="Contoh: 0812XXXXXXXX">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-bold text-neutral-700 uppercase mb-1">Pilihan Produk</label>
+                            <select id="k-produk" class="w-full p-2.5 rounded border border-neutral-300 text-sm bg-white">
+                                <option value="Meja Makan Jati">Meja Makan Kayu Jati</option>
+                                <option value="Kursi Scandinavian">Kursi Makan Scandinavian</option>
+                                <option value="Meja Belajar Minimalis">Meja Belajar / Kerja Minimalis</option>
+                                <option value="Kursi Tinggi Cafe">Kursi Tinggi Cafe (Bar Stool)</option>
+                                <option value="Meja Kopi Bulat">Meja Kopi Bundar</option>
+                                <option value="Kursi Teras Klasik">Kursi Teras Klasik</option>
+                                <option value="Desain Sendiri / Kustom">Desain Kustom Lainnya</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-xs font-bold text-neutral-700 uppercase mb-1">Keterangan Tambahan</label>
+                            <textarea id="k-pesan" rows="3" required class="w-full p-2.5 rounded border border-neutral-300 text-sm bg-white" placeholder="Sebutkan ukuran panjang x lebar atau warna finishing yang Anda minati..."></textarea>
+                        </div>
+
+                        <button type="submit" class="w-full bg-amber-800 text-white font-bold py-3 px-4 rounded-lg hover:bg-amber-900 transition flex items-center justify-center gap-2 text-sm shadow">
+                            <i class="fa-solid fa-paper-plane"></i> Kirim Pesan via WhatsApp
+                        </button>
+                    </form>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- ========================================== -->
+    <!-- BAGIAN FOOTER                              -->
+    <!-- ========================================== -->
+    <footer class="bg-neutral-900 text-neutral-400 py-10 text-xs border-t border-neutral-800">
+        <div class="max-w-5xl mx-auto px-4 grid grid-cols-1 md:grid-cols-3 gap-6">
+            <!-- Tentang website -->
+            <div class="space-y-3">
+                <h4 class="font-bold text-white text-sm"><i class="fa-solid fa-hammer mr-1.5"></i> Profil Usaha Lokal</h4>
+                <p class="leading-relaxed text-neutral-400">
+                    Situs ini dirancang untuk menampilkan contoh-contoh kerajinan kayu hasil buatan tetangga di lingkungan RT 03/RW 01, guna memenuhi tugas pembelajaran website berbasis HTML.
+                </p>
+            </div>
+            <!-- Menu Pintar -->
+            <div class="space-y-3">
+                <h4 class="font-bold text-white text-sm">Navigasi Pintar</h4>
+                <ul class="space-y-1.5">
+                    <li><a href="#beranda" class="hover:text-white transition">Halaman Beranda</a></li>
+                    <li><a href="#tentang" class="hover:text-white transition">Tentang Pengrajin</a></li>
+                    <li><a href="#produk" class="hover:text-white transition">Katalog Kerajinan</a></li>
+                    <li><a href="#kalkulator" class="hover:text-white transition">Kalkulator Harga</a></li>
+                </ul>
+            </div>
+            <!-- Identitas Siswa -->
+            <div class="space-y-3">
+                <h4 class="font-bold text-white text-sm">Informasi Pembuat Website</h4>
+                <p class="leading-relaxed text-neutral-400">
+                    Website ini sepenuhnya dikembangkan menggunakan editor VS Code dan dipublikasikan gratis via GitHub Pages.
+                </p>
+                <p class="text-amber-300 font-bold">
+                    Tugas Mandiri Mandiri Kerajinan Kayu Lokal © 2026
+                </p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- ========================================== -->
+    <!-- DIALOG NOTIFIKASI SUKSES (MENGGANTI ALERT)  -->
+    <!-- ========================================== -->
+    <div id="modal-notif" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 hidden">
+        <div class="bg-white rounded-xl max-w-sm w-full p-6 text-center space-y-4 border border-neutral-200">
+            <div class="mx-auto flex h-12 w-12 items-center justify-center rounded-full bg-green-100 text-green-600">
+                <i class="fa-solid fa-check text-xl"></i>
+            </div>
+            <h3 class="text-lg font-bold text-neutral-900">Berhasil Disiapkan!</h3>
+            <p class="text-xs text-neutral-500 leading-relaxed" id="modal-notif-teks">
+                Pesan Anda telah siap dikonversi menjadi format pesan chat. Anda akan langsung diarahkan menuju aplikasi WhatsApp.
+            </p>
+            <button onclick="bukaWhatsApp()" class="w-full bg-amber-800 py-2.5 rounded text-white text-xs font-semibold hover:bg-amber-900 transition">
+                Buka Chat WhatsApp Sekarang
+            </button>
+        </div>
+    </div>
+
+    <!-- ========================================== -->
+    <!-- BAGIAN LOGIKA JAVASCRIPT                   -->
+    <!-- ========================================== -->
+    <script>
+        // Deklarasi tombol pemicu menu HP
+        const btnMenuHp = document.getElementById('btn-menu-hp');
+        const menuHp = document.getElementById('menu-hp');
+
+        // Toggle buka/tutup menu ketika diklik di Handphone
+        btnMenuHp.addEventListener('click', () => {
+            menuHp.classList.toggle('hidden');
+        });
+
+        // Sembunyikan menu HP otomatis saat berpindah link menu
+        const tautanMenuHp = menuHp.querySelectorAll('a');
+        tautanMenuHp.forEach(link => {
+            link.addEventListener('click', () => {
+                menuHp.classList.add('hidden');
+            });
+        });
+
+        // Logika fungsi filter produk
+        function saringKoleksi(kategori) {
+            const listKartu = document.querySelectorAll('.kartu-produk');
+            const tombolFilter = document.querySelectorAll('.btn-filter');
+
+            // Reset seluruh gaya tombol filter menjadi pasif
+            tombolFilter.forEach(tombol => {
+                tombol.className = "btn-filter px-4 py-1.5 text-xs sm:text-sm font-semibold rounded bg-white text-neutral-700 border hover:bg-amber-100";
+            });
+
+            // Set tombol terpilih menjadi aktif (Warna Amber)
+            const tombolAktif = document.getElementById(`filter-${kategori}`);
+            if (tombolAktif) {
+                tombolAktif.className = "btn-filter px-4 py-1.5 text-xs sm:text-sm font-semibold rounded bg-amber-800 text-white shadow";
+            }
+
+            // Atur visibilitas setiap item barang
+            listKartu.forEach(kartu => {
+                const tipeKartu = kartu.getAttribute('data-jenis');
+                if (kategori === 'semua' || tipeKartu === kategori) {
+                    kartu.classList.remove('hidden');
+                } else {
+                    kartu.classList.add('hidden');
+                }
+            });
+        }
+
+        // Sinkronisasi pilihan katalog ke input form kontak
+        function pilihOrderan(namaBarang) {
+            const elementPilihan = document.getElementById('k-produk');
+            for (let i = 0; i < elementPilihan.options.length; i++) {
+                if (elementPilihan.options[i].text.includes(namaBarang)) {
+                    elementPilihan.selectedIndex = i;
+                    break;
+                }
+            }
+            document.getElementById('k-pesan').value = `Halo Pak Kusnan, saya tertarik dengan "${namaBarang}". Saya mau tanya dulu mengenai harga pas dan kustomisasi warnanya.`;
+        }
+
+        // Fungsi pengaturan tampilan nilai panjang slider
+        function ubahUkuranPanjang(nilai) {
+            document.getElementById('panjang-teks').textContent = nilai + ' cm';
+            hitungHarga();
+        }
+
+        // Logika penghitungan simulasi harga meja & kursi
+        function hitungHarga() {
+            const tipeInput = document.getElementById('sim-tipe').value;
+            const kayuInput = document.getElementById('sim-kayu').value;
+            const panjangInput = document.getElementById('sim-panjang').value;
+            const boxPanjang = document.getElementById('sim-box-panjang');
+
+            let hargaAwal = 0;
+            let pengaliKayu = 1.0;
+
+            // Atur apakah slider dimensi panjang diperlukan
+            if (tipeInput === 'kursi') {
+                boxPanjang.classList.add('opacity-40', 'pointer-events-none');
+                hargaAwal = 350000; // Harga dasar kursi standar
+            } else {
+                boxPanjang.classList.remove('opacity-40', 'pointer-events-none');
+                hargaAwal = 800000; // Harga dasar meja standar
+            }
+
+            // Atur harga berdasarkan faktor jenis bahan kayu
+            if (kayuInput === 'jati') {
+                pengaliKayu = 1.8;
+            } else if (kayuInput === 'mahoni') {
+                pengaliKayu = 1.3;
+            } else {
+                pengaliKayu = 1.0; // Pinus ekonomis
+            }
+
+            let hasilKalkulasi = 0;
+
+            if (tipeInput === 'meja') {
+                const panjangInt = parseInt(panjangInput);
+                // Hitung pertambahan panjang centimeter
+                hasilKalkulasi = (hargaAwal + ((panjangInt - 60) * 4500)) * pengaliKayu;
+            } else {
+                hasilKalkulasi = hargaAwal * pengaliKayu;
+            }
+
+            // Format ke representasi mata uang Rupiah
+            const formatRupiah = new Intl.NumberFormat('id-ID', {
+                style: 'currency',
+                currency: 'IDR',
+                minimumFractionDigits: 0
+            });
+
+            document.getElementById('sim-hasil').textContent = formatRupiah.format(Math.round(hasilKalkulasi));
+        }
+
+        // Variabel penampung url whatsapp dinamis
+        let urlTargetWhatsApp = "";
+
+        // Fungsi pemicu kirim dari simulasi kustom
+        function kirimLewatKalkulator() {
+            const tipe = document.getElementById('sim-tipe').value;
+            const kayuSelect = document.getElementById('sim-kayu');
+            const namaKayu = kayuSelect.options[kayuSelect.selectedIndex].text;
+            const panjangCm = document.getElementById('sim-panjang').value;
+            const estimasi = document.getElementById('sim-hasil').textContent;
+
+            let isiPesan = "";
+            if (tipe === 'meja') {
+                isiPesan = `Halo Pak Kusnan, saya tertarik memesan meja dengan ukuran panjang ${panjangCm} cm, dari kayu: ${namaKayu}. Estimasi biayanya adalah ${estimasi}. Tolong info pemesanan selanjutnya.`;
+            } else {
+                isiPesan = `Halo Pak Kusnan, saya tertarik memesan model kursi berbahan kayu: ${namaKayu}. Estimasi harganya sekitar ${estimasi}. Mohon infonya ya pak.`;
+            }
+
+            const noHP = "6281234567890"; // Kontak WhatsApp Pak Kusnan
+            urlTargetWhatsApp = `https://wa.me/${noHP}?text=${encodeURIComponent(isiPesan)}`;
+
+            // Munculkan notifikasi pop-up buatan sendiri
+            document.getElementById('modal-notif-teks').innerText = "Rincian spesifikasi kustom meja/kursi Anda telah disimpan. Klik tombol di bawah untuk membukanya di WhatsApp.";
+            document.getElementById('modal-notif').classList.remove('hidden');
+        }
+
+        // Fungsi pemicu kirim dari formulir kontak utama
+        function kirimFormulir(event) {
+            event.preventDefault(); // Cegah halaman reload setelah disubmit
+
+            const nama = document.getElementById('k-nama').value;
+            const noWA = document.getElementById('k-telp').value;
+            const produkMinat = document.getElementById('k-produk').value;
+            const detailPesan = document.getElementById('k-pesan').value;
+
+            const formatChat = `Halo Pak Kusnan,\n\nPerkenalkan nama saya *${nama}* (${noWA}).\nSaya mau tanya-tanya tentang produk: *${produkMinat}*.\n\n*Pesan Tambahan:*\n"${detailPesan}"`;
+
+            const noHP = "6281234567890";
+            urlTargetWhatsApp = `https://wa.me/${noHP}?text=${encodeURIComponent(formatChat)}`;
+
+            document.getElementById('modal-notif-teks').innerText = `Halo kak ${nama}, pesan kustom produk Anda berhasil kami proses. Klik tombol di bawah untuk langsung dialihkan menuju obrolan WhatsApp.`;
+            document.getElementById('modal-notif').classList.remove('hidden');
+
+            // Kosongkan isi isian form agar bisa diisi ulang
+            document.getElementById('kontak-form').reset();
+        }
+
+        // Buka chat whatsapp dan sembunyikan pop-up kembali
+        function bukaWhatsApp() {
+            document.getElementById('modal-notif').classList.add('hidden');
+            if (urlTargetWhatsApp) {
+                window.open(urlTargetWhatsApp, '_blank');
+                urlTargetWhatsApp = ""; // Reset kembali
+            }
+        }
+
+        // Jalankan kalkulator pertama kali sewaktu situs dibuka
+        window.onload = function() {
+            hitungHarga();
+        }
+    </script>
+</body>
+</html>
