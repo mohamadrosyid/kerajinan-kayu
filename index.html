@@ -1,714 +1,1335 @@
 <!DOCTYPE html>
-<html lang="id" class="scroll-smooth">
+<html lang="id">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Website Kerajinan Kayu RT 02 - Meja & Kursi Bang Ocit</title>
-    <!-- Menggunakan Tailwind CSS CDN Standar -->
+    <title>Admin Toko Solar Zeanara - Manajemen Distribusi Solar</title>
+    <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Font Awesome untuk icon-icon sederhana -->
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- FontAwesome Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
-        /* Menggunakan font standar agar terlihat seperti buatan sendiri yang rapi */
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-family: 'Plus Jakarta Sans', sans-serif;
         }
     </style>
 </head>
-<body class="bg-amber-50 text-neutral-800">
+<body class="bg-slate-50 text-slate-800 flex h-screen overflow-hidden">
 
-    <!-- ========================================== -->
-    <!-- BAGIAN NAVIGATION BAR (MENU ATAS)          -->
-    <!-- ========================================== -->
-    <header class="bg-white shadow-sm sticky top-0 z-50">
-        <div class="max-w-6xl mx-auto px-4 py-4 flex items-center justify-between">
-            <!-- Nama Website / Logo Sederhana -->
-            <a href="#" class="flex items-center gap-2 text-amber-850 text-xl font-bold text-amber-900">
-                <i class="fa-solid fa-hammer"></i>
-                <span>MebelBangOcit</span>
-            </a>
-            
-            <!-- Menu navigasi untuk layar laptop -->
-            <nav class="hidden md:flex items-center gap-6 font-medium text-neutral-600">
-                <a href="#beranda" class="hover:text-amber-800 transition">Beranda</a>
-                <a href="#tentang" class="hover:text-amber-800 transition">Tentang Kami</a>
-                <a href="#produk" class="hover:text-amber-800 transition">Produk</a>
-                <a href="#proses" class="hover:text-amber-800 transition">Proses Kerja</a>
-                <a href="#kalkulator" class="hover:text-amber-800 transition">Kalkulator Harga</a>
-                <a href="#kontak" class="bg-amber-800 text-white px-4 py-2 rounded-lg hover:bg-amber-905 hover:bg-amber-900 transition">Hubungi</a>
+    <!-- SIDEBAR -->
+    <aside id="sidebar" class="bg-slate-900 text-white w-64 flex-shrink-0 flex flex-col justify-between transition-all duration-300 md:translate-x-0 -translate-x-full fixed md:relative z-30 h-full">
+        <div>
+            <!-- Sidebar Header -->
+            <div class="p-6 flex items-center justify-between border-b border-slate-800">
+                <div class="flex items-center space-x-3">
+                    <div class="bg-amber-500 text-slate-950 p-2.5 rounded-xl flex items-center justify-center shadow-lg shadow-amber-500/20">
+                        <i class="fa-solid fa-truck-droplet text-xl"></i>
+                    </div>
+                    <div>
+                        <h1 class="font-bold text-base leading-tight">Solar Zeanara</h1>
+                        <span class="text-[10px] tracking-wider uppercase text-amber-400 font-semibold">Toko & Distributor</span>
+                    </div>
+                </div>
+                <button onclick="toggleSidebar()" class="md:hidden text-slate-400 hover:text-white">
+                    <i class="fa-solid fa-xmark text-xl"></i>
+                </button>
+            </div>
+
+            <!-- Navigation Links -->
+            <nav class="p-4 space-y-1.5">
+                <button onclick="switchTab('dashboard')" id="btn-dashboard" class="sidebar-btn w-full flex items-center space-x-3 px-4 py-3 rounded-xl transition text-left text-sm font-semibold bg-amber-500 text-slate-950">
+                    <i class="fa-solid fa-chart-pie w-5 text-center"></i>
+                    <span>Dashboard Overview</span>
+                </button>
+                <button onclick="switchTab('penjualan')" id="btn-penjualan" class="sidebar-btn w-full flex items-center space-x-3 px-4 py-3 rounded-xl transition text-left text-sm font-semibold text-slate-400 hover:bg-slate-800 hover:text-white">
+                    <i class="fa-solid fa-receipt w-5 text-center"></i>
+                    <span>Penjualan Solar</span>
+                </button>
+                <button onclick="switchTab('pemasukan')" id="btn-pemasukan" class="sidebar-btn w-full flex items-center space-x-3 px-4 py-3 rounded-xl transition text-left text-sm font-semibold text-slate-400 hover:bg-slate-800 hover:text-white">
+                    <i class="fa-solid fa-truck-ramp-box w-5 text-center"></i>
+                    <span>Pemasukan Stok</span>
+                </button>
+                <button onclick="switchTab('laporan')" id="btn-laporan" class="sidebar-btn w-full flex items-center space-x-3 px-4 py-3 rounded-xl transition text-left text-sm font-semibold text-slate-400 hover:bg-slate-800 hover:text-white">
+                    <i class="fa-solid fa-print w-5 text-center"></i>
+                    <span>Laporan & Neraca</span>
+                </button>
+                
+                <!-- Tombol Keluar / Logout -->
+                <button onclick="logoutSistem()" class="w-full flex items-center space-x-3 px-4 py-3 rounded-xl transition text-left text-sm font-semibold text-rose-400 hover:bg-rose-950/30 hover:text-rose-300 mt-6 border border-rose-500/10">
+                    <i class="fa-solid fa-right-from-bracket w-5 text-center"></i>
+                    <span>Keluar</span>
+                </button>
             </nav>
-
-            <!-- Tombol Menu untuk pengguna Handphone -->
-            <button id="btn-menu-hp" class="md:hidden text-2xl text-neutral-700">
-                <i class="fa-solid fa-bars"></i>
-            </button>
         </div>
 
-        <!-- Tampilan Menu Handphone (Muncul jika diklik) -->
-        <div id="menu-hp" class="hidden md:hidden bg-white border-t px-4 py-3 space-y-2">
-            <a href="#beranda" class="block py-2 text-neutral-700 hover:text-amber-800 font-medium">Beranda</a>
-            <a href="#tentang" class="block py-2 text-neutral-700 hover:text-amber-800 font-medium">Tentang Kami</a>
-            <a href="#produk" class="block py-2 text-neutral-700 hover:text-amber-800 font-medium">Produk</a>
-            <a href="#proses" class="block py-2 text-neutral-700 hover:text-amber-800 font-medium">Proses Kerja</a>
-            <a href="#kalkulator" class="block py-2 text-neutral-700 hover:text-amber-800 font-medium">Kalkulator Harga</a>
-            <a href="#kontak" class="block py-2 text-center bg-amber-800 text-white rounded-lg">Hubungi Kami</a>
+        <!-- Sidebar Footer -->
+        <div class="p-4 border-t border-slate-800">
+            <div class="flex items-center space-x-3 p-2 bg-slate-800/50 rounded-xl">
+                <div class="w-9 h-9 rounded-full bg-amber-500/20 text-amber-400 flex items-center justify-center font-bold text-sm">
+                    ZN
+                </div>
+                <div>
+                    <h4 class="text-xs font-bold text-slate-200">Admin Zeanara</h4>
+                    <span class="text-[9px] text-emerald-400 font-medium"><i class="fa-solid fa-circle text-[6px] mr-1"></i> Sistem Aktif</span>
+                </div>
+            </div>
         </div>
-    </header>
+    </aside>
 
-    <!-- ========================================== -->
-    <!-- BAGIAN HERO (HALAMAN DEPAN/UTAMA)          -->
-    <!-- ========================================== -->
-    <section id="beranda" class="py-16 bg-gradient-to-b from-amber-100 to-amber-50">
-        <div class="max-w-6xl mx-auto px-4 grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+    <!-- MAIN CONTENT AREA -->
+    <div class="flex-1 flex flex-col overflow-hidden w-full">
+        <!-- TOPBAR -->
+        <header class="bg-white border-b border-slate-200 h-16 flex-shrink-0 flex items-center justify-between px-6 z-10">
+            <div class="flex items-center space-x-4">
+                <button onclick="toggleSidebar()" class="text-slate-600 hover:text-slate-900 p-2 rounded-lg hover:bg-slate-100 md:hidden">
+                    <i class="fa-solid fa-bars text-xl"></i>
+                </button>
+                <h2 id="page-title" class="text-xl font-bold text-slate-800">Dashboard Overview</h2>
+            </div>
             
-            <!-- Sisi Teks Selamat Datang -->
-            <div class="space-y-6 text-center md:text-left">
-                
-                <h1 class="text-3xl md:text-5xl font-extrabold text-neutral-900 leading-tight">
-                    Kerajinan Meja & Kursi Kayu Asli RT 02 RW 01
-                </h1>
-                <p class="text-neutral-600 text-base leading-relaxed">
-                    Selamat datang di website profil usaha kerajinan kayu lokal di lingkungan sekitar tempat tinggal saya. Kami membantu mempromosikan hasil produksi meja dan kursi berkualitas karya Bang Ocit, tetangga kami sendiri.
-                </p>
-                <div class="flex flex-col sm:flex-row gap-3 justify-center md:justify-start">
-                    <a href="#produk" class="bg-amber-800 text-white px-6 py-3 rounded-lg font-semibold hover:bg-amber-900 shadow transition text-center">
-                        <i class="fa-solid fa-eye mr-2"></i>Lihat Katalog Produk
-                    </a>
-                    <a href="#kalkulator" class="bg-white border border-amber-300 text-amber-900 px-6 py-3 rounded-lg font-semibold hover:bg-amber-100 transition text-center">
-                        Coba Kalkulator Kustom
-                    </a>
+            <div class="flex items-center space-x-4">
+                <div class="text-sm font-medium text-slate-500 hidden sm:block" id="live-clock">
+                    WIB --:--:--
+                </div>
+                <div class="h-8 w-px bg-slate-200"></div>
+                <!-- Notifikasi Toast Container -->
+                <div id="toast" class="hidden fixed top-4 right-4 bg-slate-900 text-white px-4 py-3 rounded-xl shadow-xl flex items-center space-x-3 border-l-4 border-emerald-500 transition-all duration-300 z-50 transform translate-y-[-20px] opacity-0">
+                    <i class="fa-solid fa-circle-check text-emerald-400 text-lg"></i>
+                    <span id="toast-msg" class="text-xs font-medium">Data berhasil disimpan!</span>
                 </div>
             </div>
+        </header>
 
-            <!-- Sisi Gambar / Ilustrasi Sederhana -->
-            <div class="flex justify-center">
-                <div class="bg-white p-6 rounded-2xl border-2 border-amber-200 shadow-md max-w-sm w-full text-center">
-                    <div class="text-6xl my-4 text-amber-700">
-                        <i class="fa-solid fa-couch"></i>
-                    </div>
-                    <h3 class="font-bold text-lg text-neutral-900">Bengkel Kayu Bang Ocit</h3>
-                    <p class="text-sm text-neutral-500 mt-2">Menyediakan berbagai macam furnitur kayu seperti meja makan, meja belajar, kursi teras, hingga kursi cafe dengan harga bersahabat tetangga.</p>
-                    <div class="mt-4 pt-4 border-t border-dashed border-amber-200 text-xs text-amber-800 font-semibold">
-                        <i class="fa-solid fa-location-dot mr-1"></i> RT 02 RW 02 Kelurahan Tanjung Sari
-                    </div>
-                </div>
-            </div>
+        <!-- CONTAINER UNTUK TAB DENGAN MAX WIDTH STANDAR DESKTOP -->
+        <main class="flex-1 overflow-y-auto p-6 bg-slate-50">
+            <div class="max-w-7xl mx-auto w-full space-y-6">
 
-        </div>
-    </section>
-
-    <!-- ========================================== -->
-    <!-- BAGIAN TENTANG KAMI                        -->
-    <!-- ========================================== -->
-    <section id="tentang" class="py-16 bg-white">
-        <div class="max-w-5xl mx-auto px-4">
-            <div class="text-center space-y-3 mb-12">
-                <h2 class="text-2xl md:text-3xl font-bold text-neutral-900">Mengenal Usaha Kerajinan Lokal Kami</h2>
-                <div class="w-20 h-1 bg-amber-700 mx-auto rounded"></div>
-                <p class="text-neutral-500 text-sm max-w-xl mx-auto">
-                    Website ini dibuat untuk mendukung pengembangan usaha mikro kecil menengah (UMKM) mandiri milik tetangga kami sendiri.
-                </p>
-            </div>
-
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-                <!-- Poin 1 -->
-                <div class="p-6 bg-amber-50 rounded-xl border border-amber-200 text-center">
-                    <div class="text-3xl text-amber-800 mb-3"><i class="fa-solid fa-tree"></i></div>
-                    <h3 class="font-bold text-lg text-neutral-900 mb-2">Bahan Kayu Pilihan</h3>
-                    <p class="text-sm text-neutral-600 leading-relaxed">
-                        Menggunakan kayu jati, mahoni, dan pinus pilihan yang dipotong langsung di perkebunan rakyat yang sah.
-                    </p>
-                </div>
-                <!-- Poin 2 -->
-                <div class="p-6 bg-amber-50 rounded-xl border border-amber-200 text-center">
-                    <div class="text-3xl text-amber-800 mb-3"><i class="fa-solid fa-hammer"></i></div>
-                    <h3 class="font-bold text-lg text-neutral-900 mb-2">Pengerjaan Manual</h3>
-                    <p class="text-sm text-neutral-600 leading-relaxed">
-                        Dibuat dengan keterampilan tangan secara teliti untuk menghasilkan sambungan struktur kayu yang rapi dan kuat.
-                    </p>
-                </div>
-                <!-- Poin 3 -->
-                <div class="p-6 bg-amber-50 rounded-xl border border-amber-200 text-center">
-                    <div class="text-3xl text-amber-800 mb-3"><i class="fa-solid fa-handshake"></i></div>
-                    <h3 class="font-bold text-lg text-neutral-900 mb-2">Harga Bersahabat</h3>
-                    <p class="text-sm text-neutral-600 leading-relaxed">
-                        Karena diproduksi langsung di lingkungan perumahan kita sendiri, harga produk dijamin lebih murah tanpa biaya perantara.
-                    </p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- ========================================== -->
-    <!-- BAGIAN PRODUK (DENGAN TOMBOL FILTER JS)    -->
-    <!-- ========================================== -->
-    <section id="produk" class="py-16 bg-amber-50">
-        <div class="max-w-6xl mx-auto px-4">
-            
-            <div class="text-center space-y-3 mb-10">
-                <h2 class="text-2xl md:text-3xl font-bold text-neutral-900">Katalog Meja & Kursi</h2>
-                <div class="w-20 h-1 bg-amber-700 mx-auto rounded"></div>
-                <p class="text-neutral-500 text-sm max-w-md mx-auto">
-                    Beberapa contoh model produk yang sudah pernah dibuat oleh bengkel Bang Ocit.
-                </p>
-                
-                <!-- Menu Filter Sederhana -->
-                <div class="flex justify-center gap-2 pt-4">
-                    <button onclick="saringKoleksi('semua')" id="filter-semua" class="btn-filter px-4 py-1.5 text-xs sm:text-sm font-semibold rounded bg-amber-800 text-white shadow">Semua</button>
-                    <button onclick="saringKoleksi('meja')" id="filter-meja" class="btn-filter px-4 py-1.5 text-xs sm:text-sm font-semibold rounded bg-white text-neutral-700 border hover:bg-amber-100">Meja</button>
-                    <button onclick="saringKoleksi('kursi')" id="filter-kursi" class="btn-filter px-4 py-1.5 text-xs sm:text-sm font-semibold rounded bg-white text-neutral-700 border hover:bg-amber-100">Kursi</button>
-                </div>
-            </div>
-
-            <!-- Grid Tampilan Item Produk -->
-            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6" id="wadah-produk">
-                
-                <!-- Meja Makan -->
-                <div class="kartu-produk bg-white p-4 rounded-xl border border-amber-200 shadow-sm" data-jenis="meja">
-                    <div class="h-40 bg-amber-100 rounded-lg flex items-center justify-center text-5xl text-amber-800">
-                        <i class="fa-solid fa-table"></i>
-                    </div>
-                    <div class="mt-4 space-y-2">
-                        <span class="text-xs font-bold text-amber-800 uppercase">Kategori: Meja</span>
-                        <h3 class="font-bold text-neutral-900 text-lg">Meja Makan Kayu Jati</h3>
-                        <p class="text-xs text-neutral-500">Meja makan keluarga berkapasitas 4 hingga 6 kursi, menggunakan lapisan anti rayap dan air.</p>
-                        <div class="border-t border-amber-100 pt-3 flex items-center justify-between">
-                            <div>
-                                <span class="text-[10px] text-neutral-400 font-bold block leading-none">Harga Mulai</span>
-                                <span class="text-amber-800 font-bold text-base">Rp 1.500.000</span>
-                            </div>
-                            <a href="#kontak" onclick="pilihOrderan('Meja Makan Kayu Jati')" class="bg-amber-100 text-amber-900 px-3 py-1.5 rounded text-xs font-semibold hover:bg-amber-800 hover:text-white transition">Pesan</a>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Kursi Makan -->
-                <div class="kartu-produk bg-white p-4 rounded-xl border border-amber-200 shadow-sm" data-jenis="kursi">
-                    <div class="h-40 bg-amber-100 rounded-lg flex items-center justify-center text-5xl text-amber-800">
-                        <i class="fa-solid fa-chair"></i>
-                    </div>
-                    <div class="mt-4 space-y-2">
-                        <span class="text-xs font-bold text-amber-800 uppercase">Kategori: Kursi</span>
-                        <h3 class="font-bold text-neutral-900 text-lg">Kursi Makan Scandinavian</h3>
-                        <p class="text-xs text-neutral-500">Kursi kayu mahoni minimalis yang cocok dipadukan dengan meja makan tipe apapun.</p>
-                        <div class="border-t border-amber-100 pt-3 flex items-center justify-between">
-                            <div>
-                                <span class="text-[10px] text-neutral-400 font-bold block leading-none">Harga Mulai</span>
-                                <span class="text-amber-800 font-bold text-base">Rp 350.000</span>
-                            </div>
-                            <a href="#kontak" onclick="pilihOrderan('Kursi Makan Scandinavian')" class="bg-amber-100 text-amber-900 px-3 py-1.5 rounded text-xs font-semibold hover:bg-amber-800 hover:text-white transition">Pesan</a>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Meja Belajar -->
-                <div class="kartu-produk bg-white p-4 rounded-xl border border-amber-200 shadow-sm" data-jenis="meja">
-                    <div class="h-40 bg-amber-100 rounded-lg flex items-center justify-center text-5xl text-amber-800">
-                        <i class="fa-solid fa-desktop"></i>
-                    </div>
-                    <div class="mt-4 space-y-2">
-                        <span class="text-xs font-bold text-amber-800 uppercase">Kategori: Meja</span>
-                        <h3 class="font-bold text-neutral-900 text-lg">Meja Belajar / Kerja Minimalis</h3>
-                        <p class="text-xs text-neutral-500">Dilengkapi dengan rak laci kecil untuk meletakkan alat tulis maupun laptop.</p>
-                        <div class="border-t border-amber-100 pt-3 flex items-center justify-between">
-                            <div>
-                                <span class="text-[10px] text-neutral-400 font-bold block leading-none">Harga Mulai</span>
-                                <span class="text-amber-800 font-bold text-base">Rp 950.000</span>
-                            </div>
-                            <a href="#kontak" onclick="pilihOrderan('Meja Belajar Minimalis')" class="bg-amber-100 text-amber-900 px-3 py-1.5 rounded text-xs font-semibold hover:bg-amber-800 hover:text-white transition">Pesan</a>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Kursi Bar -->
-                <div class="kartu-produk bg-white p-4 rounded-xl border border-amber-200 shadow-sm" data-jenis="kursi">
-                    <div class="h-40 bg-amber-100 rounded-lg flex items-center justify-center text-5xl text-amber-800">
-                        <i class="fa-solid fa-utensils"></i>
-                    </div>
-                    <div class="mt-4 space-y-2">
-                        <span class="text-xs font-bold text-amber-800 uppercase">Kategori: Kursi</span>
-                        <h3 class="font-bold text-neutral-900 text-lg">Kursi Tinggi Cafe (Bar Stool)</h3>
-                        <p class="text-xs text-neutral-500">Kursi tinggi tanpa sandaran yang biasa digunakan pada mini bar dapur atau kafe.</p>
-                        <div class="border-t border-amber-100 pt-3 flex items-center justify-between">
-                            <div>
-                                <span class="text-[10px] text-neutral-400 font-bold block leading-none">Harga Mulai</span>
-                                <span class="text-amber-800 font-bold text-base">Rp 400.000</span>
-                            </div>
-                            <a href="#kontak" onclick="pilihOrderan('Kursi Tinggi Cafe')" class="bg-amber-100 text-amber-900 px-3 py-1.5 rounded text-xs font-semibold hover:bg-amber-800 hover:text-white transition">Pesan</a>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Meja Kopi -->
-                <div class="kartu-produk bg-white p-4 rounded-xl border border-amber-200 shadow-sm" data-jenis="meja">
-                    <div class="h-40 bg-amber-100 rounded-lg flex items-center justify-center text-5xl text-amber-800">
-                        <i class="fa-solid fa-mug-hot"></i>
-                    </div>
-                    <div class="mt-4 space-y-2">
-                        <span class="text-xs font-bold text-amber-800 uppercase">Kategori: Meja</span>
-                        <h3 class="font-bold text-neutral-900 text-lg">Meja Kopi Bulat</h3>
-                        <p class="text-xs text-neutral-500">Meja bulat berukuran kecil untuk ruang santai depan rumah bersama keluarga.</p>
-                        <div class="border-t border-amber-100 pt-3 flex items-center justify-between">
-                            <div>
-                                <span class="text-[10px] text-neutral-400 font-bold block leading-none">Harga Mulai</span>
-                                <span class="text-amber-800 font-bold text-base">Rp 600.000</span>
-                            </div>
-                            <a href="#kontak" onclick="pilihOrderan('Meja Kopi Bulat')" class="bg-amber-100 text-amber-900 px-3 py-1.5 rounded text-xs font-semibold hover:bg-amber-800 hover:text-white transition">Pesan</a>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Kursi Teras -->
-                <div class="kartu-produk bg-white p-4 rounded-xl border border-amber-200 shadow-sm" data-jenis="kursi">
-                    <div class="h-40 bg-amber-100 rounded-lg flex items-center justify-center text-5xl text-amber-800">
-                        <i class="fa-solid fa-tree-city"></i>
-                    </div>
-                    <div class="mt-4 space-y-2">
-                        <span class="text-xs font-bold text-amber-800 uppercase">Kategori: Kursi</span>
-                        <h3 class="font-bold text-neutral-900 text-lg">Kursi Teras Klasik</h3>
-                        <p class="text-xs text-neutral-500">Sangat kuat ditaruh di area outdoor karena kayunya tebal dan dilapisi pelindung luar ruangan.</p>
-                        <div class="border-t border-amber-100 pt-3 flex items-center justify-between">
-                            <div>
-                                <span class="text-[10px] text-neutral-400 font-bold block leading-none">Harga Mulai</span>
-                                <span class="text-amber-800 font-bold text-base">Rp 450.000</span>
-                            </div>
-                            <a href="#kontak" onclick="pilihOrderan('Kursi Teras Klasik')" class="bg-amber-100 text-amber-900 px-3 py-1.5 rounded text-xs font-semibold hover:bg-amber-800 hover:text-white transition">Pesan</a>
-                        </div>
-                    </div>
-                </div>
-
-            </div>
-
-        </div>
-    </section>
-
-    <!-- ========================================== -->
-    <!-- BAGIAN PROSES PEMBUATAN                    -->
-    <!-- ========================================== -->
-    <section id="proses" class="py-16 bg-white">
-        <div class="max-w-5xl mx-auto px-4">
-            
-            <div class="text-center space-y-3 mb-12">
-                <h2 class="text-2xl md:text-3xl font-bold text-neutral-900">Alur Pengerjaan Kayu</h2>
-                <div class="w-20 h-1 bg-amber-700 mx-auto rounded"></div>
-                <p class="text-neutral-500 text-sm">Bagaimana kami mengolah balok mentah hingga menjadi perabot yang mengkilap.</p>
-            </div>
-
-            <div class="grid grid-cols-1 md:grid-cols-4 gap-6 text-center">
-                <!-- Tahap 1 -->
-                <div class="space-y-2">
-                    <div class="w-12 h-12 bg-amber-100 text-amber-900 text-xl font-bold rounded-full flex items-center justify-center mx-auto">1</div>
-                    <h3 class="font-bold text-neutral-900">Pilih Kayu</h3>
-                    <p class="text-xs text-neutral-500">Memilih kayu berumur tua agar awet, tidak melengkung, dan memiliki pola serat bagus.</p>
-                </div>
-                <!-- Tahap 2 -->
-                <div class="space-y-2">
-                    <div class="w-12 h-12 bg-amber-100 text-amber-900 text-xl font-bold rounded-full flex items-center justify-center mx-auto">2</div>
-                    <h3 class="font-bold text-neutral-900">Potong & Serut</h3>
-                    <p class="text-xs text-neutral-500">Merapikan permukaan kayu dengan mesin serut tangan hingga benar-benar halus.</p>
-                </div>
-                <!-- Tahap 3 -->
-                <div class="space-y-2">
-                    <div class="w-12 h-12 bg-amber-100 text-amber-900 text-xl font-bold rounded-full flex items-center justify-center mx-auto">3</div>
-                    <h3 class="font-bold text-neutral-900">Rakit Kerangka</h3>
-                    <p class="text-xs text-neutral-500">Merangkai bagian-bagian furnitur dengan lem berkualitas tinggi dan baut penyangga tersembunyi.</p>
-                </div>
-                <!-- Tahap 4 -->
-                <div class="space-y-2">
-                    <div class="w-12 h-12 bg-amber-800 text-white text-xl font-bold rounded-full flex items-center justify-center mx-auto">4</div>
-                    <h3 class="font-bold text-neutral-900">Poles Akhir</h3>
-                    <p class="text-xs text-neutral-500">Amplas tahap akhir dan pemberian lapisan pelindung transparan melamine natural.</p>
-                </div>
-            </div>
-
-        </div>
-    </section>
-
-    <!-- ========================================== -->
-    <!-- SEKSI INTERAKTIF: KALKULATOR HARGA KUSTOM  -->
-    <!-- ========================================== -->
-    <section id="kalkulator" class="py-16 bg-neutral-900 text-white">
-        <div class="max-w-4xl mx-auto px-4">
-            
-            <div class="text-center space-y-3 mb-10">
-                <h2 class="text-2xl md:text-3xl font-bold">Simulator Hitung Estimasi Harga</h2>
-                <p class="text-neutral-400 text-sm">Jika Anda punya kebutuhan ukuran kustom sendiri, coba hitung perkiraan harganya di bawah ini.</p>
-            </div>
-
-            <!-- Form Simulator -->
-            <div class="bg-white text-neutral-800 p-6 rounded-2xl shadow-lg max-w-xl mx-auto">
-                <div class="space-y-4">
+                <!-- TAB 1: DASHBOARD -->
+                <div id="tab-dashboard" class="tab-content space-y-6">
                     
-                    <!-- Pilihan Tipe -->
-                    <div>
-                        <label class="block text-sm font-semibold text-neutral-700 mb-1">Pilih Model Furnitur</label>
-                        <select id="sim-tipe" onchange="hitungHarga()" class="w-full p-2.5 rounded border border-neutral-350 bg-neutral-50 text-sm">
-                            <option value="meja">Meja Panjang</option>
-                            <option value="kursi">Kursi Standar</option>
-                        </select>
-                    </div>
-
-                    <!-- Pilihan Kayu -->
-                    <div>
-                        <label class="block text-sm font-semibold text-neutral-700 mb-1">Pilih Jenis Kayu</label>
-                        <select id="sim-kayu" onchange="hitungHarga()" class="w-full p-2.5 rounded border border-neutral-350 bg-neutral-50 text-sm">
-                            <option value="pinus">Kayu Pinus (Paling Ekonomis)</option>
-                            <option value="mahoni">Kayu Mahoni (Sedang & Halus)</option>
-                            <option value="jati">Kayu Jati (Sangat Kuat & Mewah)</option>
-                        </select>
-                    </div>
-
-                    <!-- Input Panjang (Khusus Meja) -->
-                    <div id="sim-box-panjang">
-                        <div class="flex justify-between items-center text-sm font-semibold text-neutral-700 mb-1">
-                            <span>Panjang Meja (cm)</span>
-                            <span id="panjang-teks" class="bg-amber-100 text-amber-900 px-2 py-0.5 rounded text-xs">120 cm</span>
-                        </div>
-                        <input type="range" id="sim-panjang" min="60" max="220" value="120" step="10" oninput="ubahUkuranPanjang(this.value)" class="w-full accent-amber-850 accent-amber-800">
-                        <div class="flex justify-between text-[10px] text-neutral-400 mt-1">
-                            <span>60 cm (Minimal)</span>
-                            <span>220 cm (Maksimal)</span>
-                        </div>
-                    </div>
-
-                    <!-- Box Hasil Estimasi -->
-                    <div class="bg-amber-50 border border-amber-200 p-4 rounded-xl text-center">
-                        <p class="text-xs text-neutral-500 font-bold uppercase tracking-wider">Perkiraan Biaya Produksi</p>
-                        <p class="text-2xl font-extrabold text-amber-900 mt-1" id="sim-hasil">Rp 0</p>
-                        <p class="text-[10px] text-neutral-400 mt-1">*Harga dapat berubah menyesuaikan tingkat kerumitan tambahan kaki/laci.</p>
-                    </div>
-
-                    <!-- Tombol Pesan Langsung -->
-                    <button onclick="kirimLewatKalkulator()" class="w-full bg-amber-800 text-white font-bold py-3 px-4 rounded-lg hover:bg-amber-900 transition flex items-center justify-center gap-2 text-sm">
-                        <i class="fa-brands fa-whatsapp"></i> Ajukan Desain Ini ke WhatsApp Pengrajin
-                    </button>
-
-                </div>
-            </div>
-
-        </div>
-    </section>
-
-    <!-- ========================================== -->
-    <!-- BAGIAN FORMULIR KONTAK & ALAMAT            -->
-    <!-- ========================================== -->
-    <section id="kontak" class="py-16 bg-white">
-        <div class="max-w-5xl mx-auto px-4">
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-10">
-                
-                <!-- Info Bengkel & Alamat -->
-                <div class="space-y-6">
-                    <h2 class="text-2xl md:text-3xl font-bold text-neutral-900">Kontak Pengrajin</h2>
-                    <div class="w-16 h-1 bg-amber-700 rounded"></div>
-                    <p class="text-neutral-600 text-sm">
-                        Jangan ragu untuk mampir ke workshop kami sekadar untuk melihat sampel jenis kayu atau berkonsultasi mengenai desain meja kursi impian Anda.
-                    </p>
-
-                    <div class="space-y-3 text-sm text-neutral-600">
-                        <div class="flex items-start gap-3">
-                            <span class="text-amber-800"><i class="fa-solid fa-map-location-dot"></i></span>
+                    <!-- Banner Peringatan Stok Kritis (<30%) -->
+                    <div id="stock-alert-banner" class="hidden bg-rose-50 border-l-4 border-rose-500 p-4 rounded-xl flex items-center justify-between shadow-sm animate-pulse">
+                        <div class="flex items-center space-x-3">
+                            <div class="p-2.5 bg-rose-100 text-rose-600 rounded-lg">
+                                <i class="fa-solid fa-triangle-exclamation text-lg"></i>
+                            </div>
                             <div>
-                                <p class="font-bold text-neutral-900">Alamat Tempat Kerja</p>
-                                <p>Jl. Eling - Eling Selatan II, RT 02/RW 02, Kelurahan TANJUNG SARI, Kecamatan BUAY MADANG TIMUR, KABUPATEN OKU TIMUR</p>
+                                <h4 class="font-bold text-rose-900 text-sm">Peringatan Kritis: Stok Solar Menipis!</h4>
+                                <p class="text-xs text-rose-700">Persediaan Bio Solar sudah berada di bawah batas aman 30% (<span id="alert-stock-liters">0</span> Liter). Segera catat pasokan masuk baru!</p>
                             </div>
                         </div>
-                        <div class="flex items-start gap-3">
-                            <span class="text-amber-800"><i class="fa-solid fa-phone"></i></span>
-                            <div>
-                                <p class="font-bold text-neutral-900">WhatsApp / HP</p>
-                                <p>0895-6344-40659 (Bang Ocit)</p>
+                        <button onclick="switchTab('pemasukan')" class="text-xs font-bold text-rose-900 bg-rose-100 hover:bg-rose-200 px-3.5 py-2 rounded-lg transition">Catat Pasokan</button>
+                    </div>
+
+                    <!-- Statistik Utama (Kondisi Desktop Lebih Fleksibel & Tidak Terpotong) -->
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                        <!-- Kartu Pendapatan Penjualan -->
+                        <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm flex items-center space-x-4 min-w-0">
+                            <div class="p-4 bg-emerald-100 text-emerald-600 rounded-xl flex-shrink-0">
+                                <i class="fa-solid fa-arrow-trend-up text-2xl"></i>
+                            </div>
+                            <div class="min-w-0 flex-1">
+                                <span class="text-xs text-slate-500 font-medium block truncate">Total Penjualan Solar</span>
+                                <h3 class="text-lg sm:text-xl lg:text-2xl font-extrabold text-slate-900 mt-0.5 truncate" id="dash-total-penjualan">Rp 0</h3>
                             </div>
                         </div>
-                        <div class="flex items-start gap-3">
-                            <span class="text-amber-800"><i class="fa-solid fa-envelope"></i></span>
-                            <div>
-                                <p class="font-bold text-neutral-900">Email Korespondensi</p>
-                                <p>bangocit76949@gmail.com</p>
+                        <!-- Kartu Pembelian Bensin (Pemasukan) -->
+                        <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm flex items-center space-x-4 min-w-0">
+                            <div class="p-4 bg-blue-100 text-blue-600 rounded-xl flex-shrink-0">
+                                <i class="fa-solid fa-truck-moving text-2xl"></i>
+                            </div>
+                            <div class="min-w-0 flex-1">
+                                <span class="text-xs text-slate-500 font-medium block truncate">Biaya Kulakan Stok (Liter)</span>
+                                <h3 class="text-lg sm:text-xl lg:text-2xl font-extrabold text-slate-900 mt-0.5 truncate" id="dash-total-pemasukan">Rp 0</h3>
+                            </div>
+                        </div>
+                        <!-- Kartu Estimasi Laba Bersih -->
+                        <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm flex items-center space-x-4 min-w-0">
+                            <div class="p-4 bg-amber-100 text-amber-600 rounded-xl flex-shrink-0">
+                                <i class="fa-solid fa-wallet text-2xl"></i>
+                            </div>
+                            <div class="min-w-0 flex-1">
+                                <span class="text-xs text-slate-500 font-medium block truncate">Estimasi Laba Bersih</span>
+                                <h3 class="text-lg sm:text-xl lg:text-2xl font-extrabold text-slate-900 mt-0.5 truncate" id="dash-laba-bersih">Rp 0</h3>
                             </div>
                         </div>
                     </div>
 
-                    <!-- Sketsa Map Sederhana -->
-                    <div class="border p-4 rounded-xl bg-amber-50">
-                        <div class="text-xs font-bold text-amber-900 mb-2">Petunjuk Menuju RT 02</div>
-                        <div class="h-28 bg-neutral-200 rounded relative overflow-hidden flex items-center justify-center text-xs font-semibold text-neutral-500">
-                            <!-- Garis Jalan Raya Sederhana -->
-                            <div class="absolute h-4 w-full bg-white top-1/2 -translate-y-1/2"></div>
-                            <div class="absolute w-4 h-full bg-white left-1/3"></div>
-                            <span class="absolute top-3 left-4 text-[10px]">Kantor Balai Desa</span>
-                            <span class="absolute bottom-3 right-10 text-[10px]">Pos Ronda Utama</span>
-                            <!-- Marker -->
-                            <div class="absolute top-1/3 left-1/3 text-center -translate-x-1/2 -translate-y-1/2">
-                                <div class="text-amber-800 text-lg animate-bounce"><i class="fa-solid fa-location-dot"></i></div>
-                                <span class="bg-white text-[9px] px-1 rounded shadow block mt-1">Bengkel Kayu</span>
+                    <!-- Bagian Monitoring Stok Tangki Solar -->
+                    <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm">
+                        <div class="flex items-center justify-between mb-6">
+                            <div>
+                                <h3 class="font-bold text-slate-900 text-lg">Monitoring Tangki Penyimpanan Bio Solar</h3>
+                                <p class="text-xs text-slate-500">Kapasitas maksimal tangki penampung adalah 20.000 Liter (Stok masuk dihitung dalam Jeriken Besar @30L, Penjualan dikonversi per Jeriken)</p>
+                            </div>
+                            <span class="px-3 py-1 bg-amber-50 text-amber-700 border border-amber-200 text-xs font-semibold rounded-full">Kapasitas Maks: 20.000 L</span>
+                        </div>
+                        <div class="flex flex-col md:flex-row items-center justify-center gap-12 max-w-2xl mx-auto py-4">
+                            <!-- Tangki Bio Solar Subsidi Centered -->
+                            <div class="bg-slate-50 p-6 rounded-2xl border border-slate-200 flex flex-col items-center w-full sm:w-80">
+                                <div class="w-full flex justify-between text-sm font-bold mb-3">
+                                    <span class="text-amber-600 flex items-center"><i class="fa-solid fa-filter mr-1.5"></i>Bio Solar (Subsidi)</span>
+                                    <span id="stok-val-biosolar" class="text-slate-700">0 L</span>
+                                </div>
+                                <!-- Desain Silinder Tangki -->
+                                <div class="w-40 h-56 bg-slate-200 rounded-t-3xl rounded-b-xl overflow-hidden relative border-4 border-slate-300 flex items-end shadow-inner">
+                                    <div id="stok-bar-biosolar" class="w-full bg-amber-500 transition-all duration-1000 flex items-center justify-center text-sm text-white font-bold" style="height: 0%;">
+                                        <span id="stok-pct-biosolar" class="drop-shadow-md text-base">0%</span>
+                                    </div>
+                                </div>
+                                <div class="text-xs text-slate-500 mt-3 font-semibold text-center bg-amber-100 text-amber-800 px-3 py-2 rounded-lg w-full space-y-1">
+                                    <div>Jeriken Kecil (8L): Rp 100.000</div>
+                                    <div>Jeriken Besar (30L): Rp 400.000</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Bagian Grafik Visual Utama -->
+                    <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                        <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm lg:col-span-2">
+                            <div class="flex items-center justify-between mb-4">
+                                <h3 class="font-bold text-slate-900 text-base">Tren Penjualan Solar (Konversi Volume Liter)</h3>
+                                <span class="text-xs text-slate-500">7 Hari Terakhir</span>
+                            </div>
+                            <div class="h-64">
+                                <canvas id="chart-tren-penjualan"></canvas>
+                            </div>
+                        </div>
+                        <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm">
+                            <div class="flex items-center justify-between mb-4">
+                                <h3 class="font-bold text-slate-900 text-base">Rasio Kapasitas Tangki</h3>
+                                <span class="text-xs text-slate-500">Persentase (%)</span>
+                            </div>
+                            <div class="h-64 flex items-center justify-center">
+                                <canvas id="chart-pie-bensin"></canvas>
                             </div>
                         </div>
                     </div>
                 </div>
 
-                <!-- Formulir Kontak Sederhana -->
-                <div class="bg-amber-50 p-6 rounded-2xl border border-amber-200">
-                    <h3 class="text-lg font-bold text-neutral-900 mb-2">Formulir Kirim Pesan Kustom</h3>
-                    <p class="text-xs text-neutral-500 mb-4">Anda juga bisa mengirimkan spesifikasi pesanan melalui isian form berikut.</p>
-                    
-                    <form onsubmit="kirimFormulir(event)" id="kontak-form" class="space-y-4">
-                        <div>
-                            <label class="block text-xs font-bold text-neutral-700 uppercase mb-1">Nama Lengkap</label>
-                            <input type="text" id="k-nama" required class="w-full p-2.5 rounded border border-neutral-300 text-sm bg-white" placeholder="Contoh: Budi Santoso">
+                <!-- TAB 2: PENJUALAN SOLAR -->
+                <div id="tab-penjualan" class="tab-content hidden space-y-6">
+                    <!-- Tombol Tambah Transaksi -->
+                    <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+                        <div class="relative w-full sm:w-72">
+                            <span class="absolute inset-y-0 left-0 flex items-center pl-3 text-slate-400">
+                                <i class="fa-solid fa-magnifying-glass text-sm"></i>
+                            </span>
+                            <input type="text" id="search-penjualan" oninput="filterPenjualan()" placeholder="Cari transaksi..." class="w-full pl-9 pr-4 py-2 border border-slate-200 rounded-xl text-sm focus:outline-none focus:border-amber-500">
                         </div>
-                        <div>
-                            <label class="block text-xs font-bold text-neutral-700 uppercase mb-1">Nomor WhatsApp Anda</label>
-                            <input type="tel" id="k-telp" required class="w-full p-2.5 rounded border border-neutral-300 text-sm bg-white" placeholder="Contoh: 0812XXXXXXXX">
-                        </div>
-                        <div>
-                            <label class="block text-xs font-bold text-neutral-700 uppercase mb-1">Pilihan Produk</label>
-                            <select id="k-produk" class="w-full p-2.5 rounded border border-neutral-300 text-sm bg-white">
-                                <option value="Meja Makan Jati">Meja Makan Kayu Jati</option>
-                                <option value="Kursi Scandinavian">Kursi Makan Scandinavian</option>
-                                <option value="Meja Belajar Minimalis">Meja Belajar / Kerja Minimalis</option>
-                                <option value="Kursi Tinggi Cafe">Kursi Tinggi Cafe (Bar Stool)</option>
-                                <option value="Meja Kopi Bulat">Meja Kopi Bundar</option>
-                                <option value="Kursi Teras Klasik">Kursi Teras Klasik</option>
-                                <option value="Desain Sendiri / Kustom">Desain Kustom Lainnya</option>
-                            </select>
-                        </div>
-                        <div>
-                            <label class="block text-xs font-bold text-neutral-700 uppercase mb-1">Keterangan Tambahan</label>
-                            <textarea id="k-pesan" rows="3" required class="w-full p-2.5 rounded border border-neutral-300 text-sm bg-white" placeholder="Sebutkan ukuran panjang x lebar atau warna finishing yang Anda minati..."></textarea>
-                        </div>
-
-                        <button type="submit" class="w-full bg-amber-800 text-white font-bold py-3 px-4 rounded-lg hover:bg-amber-900 transition flex items-center justify-center gap-2 text-sm shadow">
-                            <i class="fa-solid fa-paper-plane"></i> Kirim Pesan via WhatsApp
+                        <button onclick="openAddModal('sales')" class="bg-amber-500 hover:bg-amber-600 text-slate-950 font-bold px-4 py-2.5 rounded-xl text-sm flex items-center justify-center space-x-2 shadow-lg shadow-amber-500/10">
+                            <i class="fa-solid fa-plus"></i>
+                            <span>Input Transaksi Baru</span>
                         </button>
-                    </form>
+                    </div>
+
+                    <!-- Tabel Data Penjualan -->
+                    <div class="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden">
+                        <div class="overflow-x-auto">
+                            <table class="w-full text-left border-collapse">
+                                <thead>
+                                    <tr class="bg-slate-50 text-slate-500 text-xs font-bold border-b border-slate-200">
+                                        <th class="p-4">Tanggal</th>
+                                        <th class="p-4">Kategori Solar</th>
+                                        <th class="p-4">Ukuran Jeriken</th>
+                                        <th class="p-4">Jumlah Terjual</th>
+                                        <th class="p-4">Volume Setara (Liter)</th>
+                                        <th class="p-4">Harga Satuan</th>
+                                        <th class="p-4">Total Pembayaran</th>
+                                        <th class="p-4">Operator/Staff</th>
+                                        <th class="p-4 text-center">Aksi</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="table-penjualan-body" class="text-sm divide-y divide-slate-100">
+                                    <!-- Data Penjualan Dinamis -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- TAB 3: PEMASUKAN SOLAR STOK -->
+                <div id="tab-pemasukan" class="tab-content hidden space-y-6">
+                    <!-- Tombol Tambah Pasokan -->
+                    <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+                        <div class="relative w-full sm:w-72">
+                            <span class="absolute inset-y-0 left-0 flex items-center pl-3 text-slate-400">
+                                <i class="fa-solid fa-magnifying-glass text-sm"></i>
+                            </span>
+                            <input type="text" id="search-pemasukan" oninput="filterPemasukan()" placeholder="Cari pasokan masuk..." class="w-full pl-9 pr-4 py-2 border border-slate-200 rounded-xl text-sm focus:outline-none focus:border-amber-500">
+                        </div>
+                        <button onclick="openAddModal('incoming')" class="bg-blue-600 hover:bg-blue-700 text-white font-bold px-4 py-2.5 rounded-xl text-sm flex items-center justify-center space-x-2 shadow-lg shadow-blue-600/10">
+                            <i class="fa-solid fa-plus"></i>
+                            <span>Catat Pasokan Masuk</span>
+                        </button>
+                    </div>
+
+                    <!-- Tabel Data Pemasukan -->
+                    <div class="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden">
+                        <div class="overflow-x-auto">
+                            <table class="w-full text-left border-collapse">
+                                <thead>
+                                    <tr class="bg-slate-50 text-slate-500 text-xs font-bold border-b border-slate-200">
+                                        <th class="p-4">Tanggal Masuk</th>
+                                        <th class="p-4">Kategori Solar</th>
+                                        <th class="p-4">Jumlah Pasok (Jeriken Besar)</th>
+                                        <th class="p-4">Volume Setara (Liter)</th>
+                                        <th class="p-4">Total Biaya Kulakan</th>
+                                        <th class="p-4">Pemasok / Supplier</th>
+                                        <th class="p-4 text-center">Aksi</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="table-pemasukan-body" class="text-sm divide-y divide-slate-100">
+                                    <!-- Data Pemasukan Dinamis -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- TAB 4: LAPORAN & CETAK -->
+                <div id="tab-laporan" class="tab-content hidden space-y-6">
+                    <!-- Filter Laporan -->
+                    <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm">
+                        <h3 class="font-bold text-slate-900 text-base mb-4">Parameter Tanggal Laporan</h3>
+                        <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                            <div>
+                                <label class="block text-xs font-semibold text-slate-500 mb-1">Mulai Tanggal</label>
+                                <input type="date" id="report-start-date" class="w-full px-3 py-2 border border-slate-200 rounded-xl text-sm focus:outline-none focus:border-amber-500">
+                            </div>
+                            <div>
+                                <label class="block text-xs font-semibold text-slate-500 mb-1">Hingga Tanggal</label>
+                                <input type="date" id="report-end-date" class="w-full px-3 py-2 border border-slate-200 rounded-xl text-sm focus:outline-none focus:border-amber-500">
+                            </div>
+                            <div class="flex items-end space-x-2">
+                                <button onclick="generateReport()" class="flex-1 bg-amber-500 hover:bg-amber-600 text-slate-950 font-bold py-2 px-4 rounded-xl text-sm transition">
+                                    <i class="fa-solid fa-filter mr-1.5"></i>Terapkan Filter
+                                </button>
+                                <button onclick="printReport()" class="bg-slate-800 hover:bg-slate-950 text-white font-bold py-2 px-4 rounded-xl text-sm transition" title="Cetak Laporan">
+                                    <i class="fa-solid fa-print"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Hasil Ringkasan Neraca Laporan -->
+                    <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm space-y-6" id="printable-area">
+                        <div class="border-b border-slate-200 pb-4 text-center">
+                            <h2 class="text-xl font-bold text-slate-900 uppercase tracking-wide">LAPORAN KEUANGAN TOKO SOLAR ZEANARA</h2>
+                            <p class="text-xs text-slate-500 mt-1" id="report-period-text">Periode: Semua Tanggal</p>
+                        </div>
+
+                        <!-- Statistik Laporan -->
+                        <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 border-b border-slate-200 pb-6">
+                            <div class="bg-emerald-50 p-4 rounded-xl border border-emerald-100">
+                                <span class="text-xs text-emerald-700 font-bold block">Total Penjualan (Kotor)</span>
+                                <span class="text-2xl font-extrabold text-emerald-900" id="rep-income">Rp 0</span>
+                            </div>
+                            <div class="bg-rose-50 p-4 rounded-xl border border-rose-100">
+                                <span class="text-xs text-rose-700 font-bold block">Total Biaya Kulakan Stok</span>
+                                <span class="text-2xl font-extrabold text-rose-900" id="rep-expense">Rp 0</span>
+                            </div>
+                            <div class="bg-amber-50 p-4 rounded-xl border border-amber-100">
+                                <span class="text-xs text-amber-700 font-bold block">Laba Bersih Toko</span>
+                                <span class="text-2xl font-extrabold text-amber-900" id="rep-profit">Rp 0</span>
+                            </div>
+                        </div>
+
+                        <!-- Detail Aliran Kas Masuk/Keluar -->
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div>
+                                <h4 class="font-bold text-slate-900 text-sm mb-3">Rincian Penjualan Solar Berdasarkan Ukuran Jeriken</h4>
+                                <div class="space-y-2" id="rep-fuel-breakdown">
+                                    <!-- Dinamis breakdown -->
+                                </div>
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-slate-900 text-sm mb-3">Rincian Pengeluaran Kulakan</h4>
+                                <div class="space-y-2">
+                                    <div class="flex justify-between items-center text-sm p-2 bg-slate-50 rounded-lg">
+                                        <span class="text-slate-600 font-medium">Pembelian Solar (Stok Masuk)</span>
+                                        <span class="font-bold text-slate-900" id="rep-fuel-purchase-cost">Rp 0</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
 
             </div>
-        </div>
-    </section>
+        </main>
+    </div>
 
-    <!-- ========================================== -->
-    <!-- BAGIAN FOOTER                              -->
-    <!-- ========================================== -->
-    <footer class="bg-neutral-900 text-neutral-400 py-10 text-xs border-t border-neutral-800">
-        <div class="max-w-5xl mx-auto px-4 grid grid-cols-1 md:grid-cols-3 gap-6">
-            <!-- Tentang website -->
-            <div class="space-y-3">
-                <h4 class="font-bold text-white text-sm"><i class="fa-solid fa-hammer mr-1.5"></i> Profil Usaha Lokal</h4>
-                <p class="leading-relaxed text-neutral-400">
-                    Situs ini dirancang untuk menampilkan contoh-contoh kerajinan kayu hasil buatan tetangga di lingkungan RT 02/RW 02.
-                </p>
+    <!-- MODAL 1: FORM INPUT PENJUALAN -->
+    <div id="modal-penjualan" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 flex items-center justify-center hidden p-4">
+        <div class="bg-white rounded-2xl w-full max-w-md overflow-hidden shadow-2xl border border-slate-200 transform scale-95 transition-all duration-300">
+            <div class="bg-amber-500 text-slate-950 p-5 flex items-center justify-between">
+                <h3 class="font-bold text-base" id="penjualan-modal-title"><i class="fa-solid fa-cart-shopping mr-2"></i>Catat Transaksi Penjualan</h3>
+                <button onclick="closeModal('modal-penjualan')" class="text-slate-950 hover:bg-amber-600 p-1 rounded-lg"><i class="fa-solid fa-xmark text-lg"></i></button>
             </div>
-            <!-- Menu Pintar -->
-            <div class="space-y-3">
-                <h4 class="font-bold text-white text-sm">Navigasi Pintar</h4>
-                <ul class="space-y-1.5">
-                    <li><a href="#beranda" class="hover:text-white transition">Halaman Beranda</a></li>
-                    <li><a href="#tentang" class="hover:text-white transition">Tentang Pengrajin</a></li>
-                    <li><a href="#produk" class="hover:text-white transition">Katalog Kerajinan</a></li>
-                    <li><a href="#kalkulator" class="hover:text-white transition">Kalkulator Harga</a></li>
-                </ul>
+            <form id="form-penjualan" onsubmit="submitPenjualan(event)" class="p-6 space-y-4">
+                <div>
+                    <label class="block text-xs font-bold text-slate-500 mb-1">Tanggal Transaksi</label>
+                    <input type="datetime-local" id="penjualan-date" required class="w-full px-3.5 py-2.5 border border-slate-200 rounded-xl text-sm focus:outline-none focus:border-amber-500">
+                </div>
+                <div>
+                    <label class="block text-xs font-bold text-slate-500 mb-1">Kategori Bahan Bakar</label>
+                    <input type="text" value="Bio Solar (Subsidi)" readonly class="w-full px-3.5 py-2.5 border border-slate-200 rounded-xl text-sm bg-slate-100 text-slate-600 font-semibold focus:outline-none">
+                    <input type="hidden" id="penjualan-type" value="Bio Solar (Subsidi)">
+                </div>
+                <div class="grid grid-cols-2 gap-3">
+                    <div>
+                        <label class="block text-xs font-bold text-slate-500 mb-1">Ukuran Jeriken</label>
+                        <select id="penjualan-size" onchange="kalkulasiPenjualan()" required class="w-full px-3.5 py-2.5 border border-slate-200 rounded-xl text-sm focus:outline-none focus:border-amber-500 bg-white">
+                            <option value="Kecil">Kecil (8 Liter - Rp 100k)</option>
+                            <option value="Besar">Besar (30 Liter - Rp 400k)</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block text-xs font-bold text-slate-500 mb-1">Jumlah Terjual (Unit)</label>
+                        <input type="number" step="1" min="1" id="penjualan-qty" oninput="kalkulasiPenjualan()" required class="w-full px-3.5 py-2.5 border border-slate-200 rounded-xl text-sm focus:outline-none focus:border-amber-500">
+                    </div>
+                </div>
+                <div>
+                    <label class="block text-xs font-bold text-slate-500 mb-1">Total Pembayaran (Rp)</label>
+                    <input type="number" id="penjualan-total" readonly class="w-full px-3.5 py-2.5 border border-slate-200 rounded-xl text-sm bg-slate-100 text-slate-600 font-bold focus:outline-none">
+                </div>
+                <div>
+                    <label class="block text-xs font-bold text-slate-500 mb-1">Operator Penjual</label>
+                    <input type="text" id="penjualan-staff" required placeholder="Nama petugas/operator" class="w-full px-3.5 py-2.5 border border-slate-200 rounded-xl text-sm focus:outline-none focus:border-amber-500">
+                </div>
+                <div class="pt-2 flex justify-end space-x-3">
+                    <button type="button" onclick="closeModal('modal-penjualan')" class="px-4 py-2 text-slate-500 hover:text-slate-800 text-sm font-semibold">Batal</button>
+                    <button type="submit" id="penjualan-submit-btn" class="bg-amber-500 hover:bg-amber-600 text-slate-950 font-bold px-5 py-2.5 rounded-xl text-sm">Simpan Transaksi</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- MODAL 2: FORM INPUT PEMASUKAN STOK -->
+    <div id="modal-pemasukan" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 flex items-center justify-center hidden p-4">
+        <div class="bg-white rounded-2xl w-full max-w-md overflow-hidden shadow-2xl border border-slate-200 transform scale-95 transition-all duration-300">
+            <div class="bg-blue-600 text-white p-5 flex items-center justify-between">
+                <h3 class="font-bold text-base" id="pemasukan-modal-title"><i class="fa-solid fa-truck-field mr-2"></i>Catat Pasokan Stok Masuk</h3>
+                <button onclick="closeModal('modal-pemasukan')" class="text-white hover:bg-blue-700 p-1 rounded-lg"><i class="fa-solid fa-xmark text-lg"></i></button>
             </div>
-            <!-- Identitas Siswa -->
-            <div class="space-y-3">
-                <h4 class="font-bold text-white text-sm">Informasi Pembuat Website</h4>
-                <p class="leading-relaxed text-neutral-400">
-                    Website ini dikembangkan sebagai media promosi dan informasi produk kerajinan lokal. Seluruh fitur dirancang untuk memudahkan pelanggan dalam melihat katalog produk, menghitung estimasi harga, dan menghubungi pengrajin secara langsung.
+            <form id="form-pemasukan" onsubmit="submitPemasukan(event)" class="p-6 space-y-4">
+                <div>
+                    <label class="block text-xs font-bold text-slate-500 mb-1">Tanggal Pengiriman</label>
+                    <input type="datetime-local" id="pemasukan-date" required class="w-full px-3.5 py-2.5 border border-slate-200 rounded-xl text-sm focus:outline-none focus:border-blue-500">
+                </div>
+                <div>
+                    <label class="block text-xs font-bold text-slate-500 mb-1">Kategori Solar Yang Masuk</label>
+                    <input type="text" value="Bio Solar (Subsidi)" readonly class="w-full px-3.5 py-2.5 border border-slate-200 rounded-xl text-sm bg-slate-100 text-slate-600 font-semibold focus:outline-none">
+                    <input type="hidden" id="pemasukan-type" value="Bio Solar (Subsidi)">
+                </div>
+                <div class="grid grid-cols-2 gap-3">
+                    <div>
+                        <label class="block text-xs font-bold text-slate-500 mb-1">Jumlah Pasok (Jeriken Besar - 30L)</label>
+                        <input type="number" step="1" min="1" id="pemasukan-qty" required class="w-full px-3.5 py-2.5 border border-slate-200 rounded-xl text-sm focus:outline-none focus:border-blue-500">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-bold text-slate-500 mb-1">Total Biaya Kulakan (Rp)</label>
+                        <input type="number" id="pemasukan-cost" required class="w-full px-3.5 py-2.5 border border-slate-200 rounded-xl text-sm focus:outline-none focus:border-blue-500">
+                    </div>
+                </div>
+                <div>
+                    <label class="block text-xs font-bold text-slate-500 mb-1">Distributor / Supplier</label>
+                    <input type="text" id="pemasukan-supplier" required placeholder="Contoh: Pertamina Patra Niaga, dll" class="w-full px-3.5 py-2.5 border border-slate-200 rounded-xl text-sm focus:outline-none focus:border-blue-500">
+                </div>
+                <div class="pt-2 flex justify-end space-x-3">
+                    <button type="button" onclick="closeModal('modal-pemasukan')" class="px-4 py-2 text-slate-500 hover:text-slate-800 text-sm font-semibold">Batal</button>
+                    <button type="submit" id="pemasukan-submit-btn" class="bg-blue-600 hover:bg-blue-700 text-white font-bold px-5 py-2.5 rounded-xl text-sm">Simpan Stok Masuk</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- MODAL 3: SYSTEM ALERT (Menggantikan Alert Browser Bawaan) -->
+    <div id="modal-alert" class="fixed inset-0 bg-slate-900/65 backdrop-blur-xs z-50 flex items-center justify-center hidden p-4">
+        <div class="bg-white rounded-2xl w-full max-w-sm overflow-hidden shadow-2xl border border-rose-100 transform scale-95 transition-all duration-300">
+            <div class="bg-rose-600 text-white p-4 flex items-center space-x-3">
+                <i class="fa-solid fa-triangle-exclamation text-xl"></i>
+                <h3 class="font-bold text-sm">Pemberitahuan Sistem</h3>
+            </div>
+            <div class="p-6">
+                <p id="alert-text-content" class="text-sm text-slate-600 font-medium leading-relaxed">Pesan kesalahan di sini.</p>
+                <div class="mt-5 flex justify-end">
+                    <button onclick="closeAlertModal()" class="bg-slate-900 hover:bg-slate-800 text-white font-bold px-4 py-2 rounded-xl text-xs transition">Ok, Dimengerti</button>
+                </div>
             </div>
         </div>
-    </footer>
+    </div>
 
-    <!-- ========================================== -->
-    <!-- DIALOG NOTIFIKASI SUKSES (MENGGANTI ALERT)  -->
-    <!-- ========================================== -->
-    <div id="modal-notif" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 hidden">
-        <div class="bg-white rounded-xl max-w-sm w-full p-6 text-center space-y-4 border border-neutral-200">
-            <div class="mx-auto flex h-12 w-12 items-center justify-center rounded-full bg-green-100 text-green-600">
-                <i class="fa-solid fa-check text-xl"></i>
+    <!-- MODAL 4: CUSTOM CONFIRM MODAL (Pemberantas Confirm Dialog Browser) -->
+    <div id="modal-confirm" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 flex items-center justify-center hidden p-4">
+        <div class="bg-white rounded-2xl w-full max-w-sm overflow-hidden shadow-2xl border border-slate-200 transform scale-95 transition-all duration-300">
+            <div class="bg-slate-900 text-white p-4 flex items-center space-x-3">
+                <i class="fa-solid fa-circle-question text-xl text-amber-500"></i>
+                <h3 class="font-bold text-sm">Konfirmasi Hapus</h3>
             </div>
-            <h3 class="text-lg font-bold text-neutral-900">Berhasil Disiapkan!</h3>
-            <p class="text-xs text-neutral-500 leading-relaxed" id="modal-notif-teks">
-                Pesan Anda telah siap dikonversi menjadi format pesan chat. Anda akan langsung diarahkan menuju aplikasi WhatsApp.
-            </p>
-            <button onclick="bukaWhatsApp()" class="w-full bg-amber-800 py-2.5 rounded text-white text-xs font-semibold hover:bg-amber-900 transition">
-                Buka Chat WhatsApp Sekarang
+            <div class="p-6">
+                <p class="text-sm text-slate-600 font-medium leading-relaxed">Apakah Anda yakin ingin menghapus data ini? Catatan yang dihapus tidak dapat dipulihkan kembali.</p>
+                <div class="mt-6 flex justify-end space-x-3">
+                    <button onclick="closeConfirmModal()" class="px-4 py-2 text-slate-500 hover:text-slate-800 text-xs font-bold">Batal</button>
+                    <button onclick="executeDelete()" class="bg-rose-600 hover:bg-rose-700 text-white font-bold px-4 py-2 rounded-xl text-xs transition">Ya, Hapus</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL 5: CUSTOM DETAIL MODAL (Lihat Detail Transaksi Lengkap) -->
+    <div id="modal-detail" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 flex items-center justify-center hidden p-4">
+        <div class="bg-white rounded-2xl w-full max-w-md overflow-hidden shadow-2xl border border-slate-200 transform scale-95 transition-all duration-300">
+            <div class="bg-slate-900 text-white p-5 flex items-center justify-between">
+                <h3 class="font-bold text-base" id="detail-modal-title">Detail Catatan</h3>
+                <button onclick="closeDetailModal()" class="text-slate-400 hover:text-white p-1 rounded-lg"><i class="fa-solid fa-xmark text-lg"></i></button>
+            </div>
+            <div class="p-6" id="detail-modal-body">
+                <!-- Diisi Dinamis oleh Javascript -->
+            </div>
+            <div class="p-4 bg-slate-50 border-t border-slate-100 flex justify-end">
+                <button onclick="closeDetailModal()" class="bg-slate-900 hover:bg-slate-800 text-white font-bold px-5 py-2.5 rounded-xl text-xs transition">Tutup Detail</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- SCREEN LOGOUT / LOGIN SIMULASI -->
+    <div id="logout-screen" class="fixed inset-0 bg-slate-950 z-50 flex items-center justify-center hidden p-4">
+        <div class="bg-slate-900 border border-slate-800 p-8 rounded-3xl w-full max-w-md text-center shadow-2xl space-y-6">
+            <div class="mx-auto bg-amber-500 text-slate-950 w-16 h-16 rounded-2xl flex items-center justify-center shadow-lg shadow-amber-500/20">
+                <i class="fa-solid fa-truck-droplet text-3xl"></i>
+            </div>
+            <div class="space-y-2">
+                <h2 class="text-white text-2xl font-extrabold tracking-tight">Sesi Berakhir</h2>
+                <p class="text-slate-400 text-sm">Anda telah keluar secara aman dari Sistem Admin Toko Solar Zeanara.</p>
+            </div>
+            <button onclick="loginKembali()" class="w-full bg-amber-500 hover:bg-amber-600 text-slate-950 font-bold py-3 px-6 rounded-xl text-sm transition shadow-lg shadow-amber-500/15 flex items-center justify-center space-x-2">
+                <i class="fa-solid fa-right-to-bracket"></i>
+                <span>Masuk Kembali</span>
             </button>
         </div>
     </div>
 
-    <!-- ========================================== -->
-    <!-- BAGIAN LOGIKA JAVASCRIPT                   -->
-    <!-- ========================================== -->
+    <!-- LOGIKA DAN DEKLARASI DATA (JAVASCRIPT) -->
     <script>
-        // Deklarasi tombol pemicu menu HP
-        const btnMenuHp = document.getElementById('btn-menu-hp');
-        const menuHp = document.getElementById('menu-hp');
+        // Konfigurasi Produk Toko Solar Zeanara
+        const TANGKI_BIO_SOLAR = 'Bio Solar (Subsidi)';
+        const MAX_TANK_CAPACITY = 20000; // Kapasitas tangki kustom toko (20.000 L)
 
-        // Toggle buka/tutup menu ketika diklik di Handphone
-        btnMenuHp.addEventListener('click', () => {
-            menuHp.classList.toggle('hidden');
-        });
+        // Database Simulasi (tersimpan dalam localStorage)
+        let dataStore = {
+            sales: [
+                { id: '1687770001', date: '2026-06-21T08:30', type: TANGKI_BIO_SOLAR, size: 'Kecil', qty: 15, total: 1500000, staff: 'Arman' }, // 15 * 8L = 120L, 15 * 100k = 1.5M
+                { id: '1687770003', date: '2026-06-23T14:40', type: TANGKI_BIO_SOLAR, size: 'Besar', qty: 5, total: 2000000, staff: 'Arman' },  // 5 * 30L = 150L, 5 * 400k = 2.0M
+                { id: '1687770005', date: '2026-06-25T11:05', type: TANGKI_BIO_SOLAR, size: 'Kecil', qty: 35, total: 3500000, staff: 'Susi' },  // 35 * 8L = 280L, 35 * 100k = 3.5M
+                { id: '1687770007', date: '2026-06-26T07:10', type: TANGKI_BIO_SOLAR, size: 'Besar', qty: 2, total: 800000, staff: 'Susi' }     // 2 * 30L = 60L, 2 * 400k = 800k
+            ],
+            incoming: [
+                { id: '2687770001', date: '2026-06-19T06:00', type: TANGKI_BIO_SOLAR, qty: 400, volume: 12000, totalCost: 66000000, supplier: 'Pertamina Patra Niaga Regional IV' },
+                { id: '2687770003', date: '2026-06-24T07:00', type: TANGKI_BIO_SOLAR, qty: 200, volume: 6000, totalCost: 33000000, supplier: 'Pertamina Patra Niaga Regional IV' }
+            ]
+        };
 
-        // Sembunyikan menu HP otomatis saat berpindah link menu
-        const tautanMenuHp = menuHp.querySelectorAll('a');
-        tautanMenuHp.forEach(link => {
-            link.addEventListener('click', () => {
-                menuHp.classList.add('hidden');
-            });
-        });
+        // State control untuk pelacakan update data / editing mode
+        let editSalesId = null;
+        let editIncomingId = null;
+        let deleteTarget = { type: null, id: null };
 
-        // Logika fungsi filter produk
-        function saringKoleksi(kategori) {
-            const listKartu = document.querySelectorAll('.kartu-produk');
-            const tombolFilter = document.querySelectorAll('.btn-filter');
+        let lineChart = null;
+        let pieChart = null;
 
-            // Reset seluruh gaya tombol filter menjadi pasif
-            tombolFilter.forEach(tombol => {
-                tombol.className = "btn-filter px-4 py-1.5 text-xs sm:text-sm font-semibold rounded bg-white text-neutral-700 border hover:bg-amber-100";
-            });
-
-            // Set tombol terpilih menjadi aktif (Warna Amber)
-            const tombolAktif = document.getElementById(`filter-${kategori}`);
-            if (tombolAktif) {
-                tombolAktif.className = "btn-filter px-4 py-1.5 text-xs sm:text-sm font-semibold rounded bg-amber-800 text-white shadow";
-            }
-
-            // Atur visibilitas setiap item barang
-            listKartu.forEach(kartu => {
-                const tipeKartu = kartu.getAttribute('data-jenis');
-                if (kategori === 'semua' || tipeKartu === kategori) {
-                    kartu.classList.remove('hidden');
-                } else {
-                    kartu.classList.add('hidden');
-                }
-            });
-        }
-
-        // Sinkronisasi pilihan katalog ke input form kontak
-        function pilihOrderan(namaBarang) {
-            const elementPilihan = document.getElementById('k-produk');
-            for (let i = 0; i < elementPilihan.options.length; i++) {
-                if (elementPilihan.options[i].text.includes(namaBarang)) {
-                    elementPilihan.selectedIndex = i;
-                    break;
-                }
-            }
-            document.getElementById('k-pesan').value = `Halo Bang Ocit, saya tertarik dengan "${namaBarang}". Saya mau tanya dulu mengenai harga pas dan kustomisasi warnanya.`;
-        }
-
-        // Fungsi pengaturan tampilan nilai panjang slider
-        function ubahUkuranPanjang(nilai) {
-            document.getElementById('panjang-teks').textContent = nilai + ' cm';
-            hitungHarga();
-        }
-
-        // Logika penghitungan simulasi harga meja & kursi
-        function hitungHarga() {
-            const tipeInput = document.getElementById('sim-tipe').value;
-            const kayuInput = document.getElementById('sim-kayu').value;
-            const panjangInput = document.getElementById('sim-panjang').value;
-            const boxPanjang = document.getElementById('sim-box-panjang');
-
-            let hargaAwal = 0;
-            let pengaliKayu = 1.0;
-
-            // Atur apakah slider dimensi panjang diperlukan
-            if (tipeInput === 'kursi') {
-                boxPanjang.classList.add('opacity-40', 'pointer-events-none');
-                hargaAwal = 350000; // Harga dasar kursi standar
-            } else {
-                boxPanjang.classList.remove('opacity-40', 'pointer-events-none');
-                hargaAwal = 800000; // Harga dasar meja standar
-            }
-
-            // Atur harga berdasarkan faktor jenis bahan kayu
-            if (kayuInput === 'jati') {
-                pengaliKayu = 1.8;
-            } else if (kayuInput === 'mahoni') {
-                pengaliKayu = 1.3;
-            } else {
-                pengaliKayu = 1.0; // Pinus ekonomis
-            }
-
-            let hasilKalkulasi = 0;
-
-            if (tipeInput === 'meja') {
-                const panjangInt = parseInt(panjangInput);
-                // Hitung pertambahan panjang centimeter
-                hasilKalkulasi = (hargaAwal + ((panjangInt - 60) * 4500)) * pengaliKayu;
-            } else {
-                hasilKalkulasi = hargaAwal * pengaliKayu;
-            }
-
-            // Format ke representasi mata uang Rupiah
-            const formatRupiah = new Intl.NumberFormat('id-ID', {
-                style: 'currency',
-                currency: 'IDR',
-                minimumFractionDigits: 0
-            });
-
-            document.getElementById('sim-hasil').textContent = formatRupiah.format(Math.round(hasilKalkulasi));
-        }
-
-        // Variabel penampung url whatsapp dinamis
-        let urlTargetWhatsApp = "";
-
-        // Fungsi pemicu kirim dari simulasi kustom
-        function kirimLewatKalkulator() {
-            const tipe = document.getElementById('sim-tipe').value;
-            const kayuSelect = document.getElementById('sim-kayu');
-            const namaKayu = kayuSelect.options[kayuSelect.selectedIndex].text;
-            const panjangCm = document.getElementById('sim-panjang').value;
-            const estimasi = document.getElementById('sim-hasil').textContent;
-
-            let isiPesan = "";
-            if (tipe === 'meja') {
-                isiPesan = `Halo Bang Ocit, saya tertarik memesan meja dengan ukuran panjang ${panjangCm} cm, dari kayu: ${namaKayu}. Estimasi biayanya adalah ${estimasi}. Tolong info pemesanan selanjutnya.`;
-            } else {
-                isiPesan = `Halo Bang Ocit, saya tertarik memesan model kursi berbahan kayu: ${namaKayu}. Estimasi harganya sekitar ${estimasi}. Mohon infonya ya pak.`;
-            }
-
-            const noHP = "6281234567890"; // Kontak WhatsApp Bang Ocit
-            urlTargetWhatsApp = `https://wa.me/${noHP}?text=${encodeURIComponent(isiPesan)}`;
-
-            // Munculkan notifikasi pop-up buatan sendiri
-            document.getElementById('modal-notif-teks').innerText = "Rincian spesifikasi kustom meja/kursi Anda telah disimpan. Klik tombol di bawah untuk membukanya di WhatsApp.";
-            document.getElementById('modal-notif').classList.remove('hidden');
-        }
-
-        // Fungsi pemicu kirim dari formulir kontak utama
-        function kirimFormulir(event) {
-            event.preventDefault(); // Cegah halaman reload setelah disubmit
-
-            const nama = document.getElementById('k-nama').value;
-            const noWA = document.getElementById('k-telp').value;
-            const produkMinat = document.getElementById('k-produk').value;
-            const detailPesan = document.getElementById('k-pesan').value;
-
-            const formatChat = `Halo Pak Kusnan,\n\nPerkenalkan nama saya *${nama}* (${noWA}).\nSaya mau tanya-tanya tentang produk: *${produkMinat}*.\n\n*Pesan Tambahan:*\n"${detailPesan}"`;
-
-            const noHP = "6281234567890";
-            urlTargetWhatsApp = `https://wa.me/${noHP}?text=${encodeURIComponent(formatChat)}`;
-
-            document.getElementById('modal-notif-teks').innerText = `Halo kak ${nama}, pesan kustom produk Anda berhasil kami proses. Klik tombol di bawah untuk langsung dialihkan menuju obrolan WhatsApp.`;
-            document.getElementById('modal-notif').classList.remove('hidden');
-
-            // Kosongkan isi isian form agar bisa diisi ulang
-            document.getElementById('kontak-form').reset();
-        }
-
-        // Buka chat whatsapp dan sembunyikan pop-up kembali
-        function bukaWhatsApp() {
-            document.getElementById('modal-notif').classList.add('hidden');
-            if (urlTargetWhatsApp) {
-                window.open(urlTargetWhatsApp, '_blank');
-                urlTargetWhatsApp = ""; // Reset kembali
-            }
-        }
-
-        // Jalankan kalkulator pertama kali sewaktu situs dibuka
         window.onload = function() {
-            hitungHarga();
+            if (localStorage.getItem('zeanara_solar_datastore_v3')) {
+                dataStore = JSON.parse(localStorage.getItem('zeanara_solar_datastore_v3'));
+            } else {
+                saveToLocalStorage();
+            }
+
+            startClock();
+
+            // Set default date picker values
+            const curDate = new Date().toISOString().substring(0, 16);
+            document.getElementById('penjualan-date').value = curDate;
+            document.getElementById('pemasukan-date').value = curDate;
+
+            const baseDate = new Date().toISOString().substring(0, 10);
+            document.getElementById('report-start-date').value = '2026-06-01';
+            document.getElementById('report-end-date').value = baseDate;
+
+            // Render components
+            hitungStokDanDashboard();
+            renderTabelPenjualan();
+            renderTabelPemasukan();
+            generateReport();
+            kalkulasiPenjualan();
+        }
+
+        function saveToLocalStorage() {
+            localStorage.setItem('zeanara_solar_datastore_v3', JSON.stringify(dataStore));
+        }
+
+        function startClock() {
+            setInterval(() => {
+                const now = new Date();
+                const clockStr = now.toLocaleDateString('id-ID', {
+                    weekday: 'long', year: 'numeric', month: 'long', day: 'numeric'
+                }) + ' - ' + now.toLocaleTimeString('id-ID') + ' WIB';
+                document.getElementById('live-clock').innerText = clockStr;
+            }, 1000);
+        }
+
+        // Custom alert helper untuk menggantikan browser-alert bawaan
+        function showSystemAlert(message) {
+            const modal = document.getElementById('modal-alert');
+            document.getElementById('alert-text-content').innerText = message;
+            modal.classList.remove('hidden');
+            setTimeout(() => {
+                modal.firstElementChild.classList.remove('scale-95');
+                modal.firstElementChild.classList.add('scale-100');
+            }, 50);
+        }
+
+        function closeAlertModal() {
+            const modal = document.getElementById('modal-alert');
+            modal.firstElementChild.classList.remove('scale-100');
+            modal.firstElementChild.classList.add('scale-95');
+            setTimeout(() => {
+                modal.classList.add('hidden');
+            }, 150);
+        }
+
+        function toggleSidebar() {
+            const sidebar = document.getElementById('sidebar');
+            if (sidebar.classList.contains('-translate-x-full')) {
+                sidebar.classList.remove('-translate-x-full');
+            } else {
+                sidebar.classList.add('-translate-x-full');
+            }
+        }
+
+        function switchTab(tabId) {
+            document.querySelectorAll('.tab-content').forEach(el => el.classList.add('hidden'));
+            document.getElementById(`tab-${tabId}`).classList.remove('hidden');
+
+            const titles = {
+                dashboard: 'Dashboard Overview - Toko Solar Zeanara',
+                penjualan: 'Manajemen Penjualan Solar',
+                pemasukan: 'Manajemen Pemasukan Solar (Stok)',
+                laporan: 'Laporan & Hasil Neraca Toko'
+            };
+            document.getElementById('page-title').innerText = titles[tabId];
+
+            document.querySelectorAll('.sidebar-btn').forEach(btn => {
+                btn.classList.remove('bg-amber-500', 'text-slate-950');
+                btn.classList.add('text-slate-400', 'hover:bg-slate-800', 'hover:text-white');
+            });
+
+            const activeBtn = document.getElementById(`btn-${tabId}`);
+            activeBtn.classList.remove('text-slate-400', 'hover:bg-slate-800', 'hover:text-white');
+            activeBtn.classList.add('bg-amber-500', 'text-slate-950');
+
+            document.getElementById('sidebar').classList.add('-translate-x-full');
+
+            if (tabId === 'dashboard') {
+                hitungStokDanDashboard();
+            } else if (tabId === 'laporan') {
+                generateReport();
+            }
+        }
+
+        function formatRupiah(number) {
+            return new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR', minimumFractionDigits: 0 }).format(number);
+        }
+
+        function showToast(message) {
+            const toast = document.getElementById('toast');
+            const toastMsg = document.getElementById('toast-msg');
+            toastMsg.innerText = message;
+            
+            toast.classList.remove('hidden', 'translate-y-[-20px]', 'opacity-0');
+            toast.classList.add('flex', 'translate-y-0', 'opacity-100');
+            
+            setTimeout(() => {
+                toast.classList.remove('translate-y-0', 'opacity-100');
+                toast.classList.add('translate-y-[-20px]', 'opacity-0');
+                setTimeout(() => {
+                    toast.classList.add('hidden');
+                }, 300);
+            }, 3000);
+        }
+
+        function hitungStokDanDashboard() {
+            let sisaStok = {
+                [TANGKI_BIO_SOLAR]: 0
+            };
+
+            // Tambah pemasukan (Konversi dari qty Jeriken Besar * 30L, atau fallback volume lama)
+            dataStore.incoming.forEach(item => {
+                if (sisaStok[item.type] !== undefined) {
+                    const ltrs = item.qty ? (item.qty * 30) : parseFloat(item.volume);
+                    sisaStok[item.type] += ltrs;
+                }
+            });
+
+            // Kurangi persediaan tangki secara otomatis berdasarkan penjualan (Jeriken Kecil = 8L, Besar = 30L)
+            dataStore.sales.forEach(item => {
+                if (sisaStok[item.type] !== undefined) {
+                    const liters = (item.size === 'Kecil' ? 8 : 30) * parseInt(item.qty);
+                    sisaStok[item.type] -= liters;
+                }
+            });
+
+            // Update Tangki 1: Bio Solar
+            const qtyBio = Math.max(0, sisaStok[TANGKI_BIO_SOLAR]);
+            const pctBio = Math.min(100, Math.round((qtyBio / MAX_TANK_CAPACITY) * 100));
+            const barBio = document.getElementById('stok-bar-biosolar');
+            barBio.style.height = `${pctBio}%`;
+            document.getElementById('stok-pct-biosolar').innerText = `${pctBio}%`;
+            document.getElementById('stok-val-biosolar').innerText = `${qtyBio.toLocaleString('id-ID')} L`;
+            
+            // Pemicu Banner Peringatan Stok di bawah 30% (Kapasitas Maksimal 20k L * 30% = 6k L)
+            const alertBanner = document.getElementById('stock-alert-banner');
+            if (pctBio < 30) {
+                alertBanner.classList.remove('hidden');
+                document.getElementById('alert-stock-liters').innerText = qtyBio.toLocaleString('id-ID');
+                barBio.className = "w-full bg-rose-600 transition-all duration-1000 flex items-center justify-center text-sm text-white font-bold animate-pulse";
+            } else {
+                alertBanner.classList.add('hidden');
+                barBio.className = "w-full bg-amber-500 transition-all duration-1000 flex items-center justify-center text-sm text-white font-bold";
+            }
+
+            // Hitung Finansial (Sederhana tanpa Pengeluaran Operasional)
+            let totalPenjualan = 0;
+            dataStore.sales.forEach(x => totalPenjualan += x.total);
+
+            let totalPemasukan = 0; 
+            dataStore.incoming.forEach(x => totalPemasukan += x.totalCost);
+
+            document.getElementById('dash-total-penjualan').innerText = formatRupiah(totalPenjualan);
+            document.getElementById('dash-total-pemasukan').innerText = formatRupiah(totalPemasukan);
+            
+            const labaBersih = totalPenjualan - totalPemasukan;
+            const labaEl = document.getElementById('dash-laba-bersih');
+            labaEl.innerText = formatRupiah(labaBersih);
+            if (labaBersih < 0) {
+                labaEl.className = "text-lg sm:text-xl lg:text-2xl font-extrabold text-rose-600 mt-0.5 truncate";
+            } else {
+                labaEl.className = "text-lg sm:text-xl lg:text-2xl font-extrabold text-emerald-600 mt-0.5 truncate";
+            }
+
+            renderCharts(qtyBio);
+        }
+
+        function renderCharts(qtyBio) {
+            const ctxPie = document.getElementById('chart-pie-bensin').getContext('2d');
+            if (pieChart) { pieChart.destroy(); }
+            
+            const kapasitasKosong = Math.max(0, MAX_TANK_CAPACITY - qtyBio);
+
+            pieChart = new Chart(ctxPie, {
+                type: 'doughnut',
+                data: {
+                    labels: ['Sisa Stok (Liter)', 'Sisa Kapasitas Kosong (Liter)'],
+                    datasets: [{
+                        data: [qtyBio, kapasitasKosong],
+                        backgroundColor: ['#f59e0b', '#e2e8f0'],
+                        borderWidth: 2,
+                        borderColor: '#ffffff'
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: { position: 'bottom', labels: { boxWidth: 12, font: { family: 'Plus Jakarta Sans', size: 11 } } }
+                    },
+                    cutout: '60%'
+                }
+            });
+
+            const last7Days = [];
+            for (let i = 6; i >= 0; i--) {
+                const d = new Date();
+                d.setDate(d.getDate() - i);
+                last7Days.push(d.toISOString().substring(0, 10));
+            }
+
+            const dailyDataLiters = Array(7).fill(0);
+
+            dataStore.sales.forEach(sale => {
+                const sDate = sale.date.substring(0, 10);
+                const idx = last7Days.indexOf(sDate);
+                if (idx !== -1) {
+                    const liters = (sale.size === 'Kecil' ? 8 : 30) * parseInt(sale.qty);
+                    dailyDataLiters[idx] += liters;
+                }
+            });
+
+            const ctxLine = document.getElementById('chart-tren-penjualan').getContext('2d');
+            if (lineChart) { lineChart.destroy(); }
+
+            lineChart = new Chart(ctxLine, {
+                type: 'bar',
+                data: {
+                    labels: last7Days.map(d => {
+                        const parts = d.split('-');
+                        return `${parts[2]}/${parts[1]}`;
+                    }),
+                    datasets: [
+                        { label: 'Penjualan Solar (Liter)', data: dailyDataLiters, backgroundColor: '#f59e0b' }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: { position: 'top', labels: { boxWidth: 10, font: { family: 'Plus Jakarta Sans', size: 10 } } }
+                    },
+                    scales: {
+                        x: { grid: { display: false } },
+                        y: { beginAtZero: true, ticks: { callback: value => value + ' L' } }
+                    }
+                }
+            });
+        }
+
+        function openModal(id) {
+            const modal = document.getElementById(id);
+            modal.classList.remove('hidden');
+            setTimeout(() => {
+                modal.firstElementChild.classList.remove('scale-95');
+                modal.firstElementChild.classList.add('scale-100');
+            }, 50);
+        }
+
+        // Pengatur pembukaan form transaksi baru (Reset state edit)
+        function openAddModal(type) {
+            if (type === 'sales') {
+                editSalesId = null;
+                document.getElementById('form-penjualan').reset();
+                document.getElementById('penjualan-date').value = new Date().toISOString().substring(0, 16);
+                document.getElementById('penjualan-modal-title').innerHTML = '<i class="fa-solid fa-cart-shopping mr-2"></i>Catat Transaksi Penjualan';
+                document.getElementById('penjualan-submit-btn').innerText = 'Simpan Transaksi';
+                kalkulasiPenjualan();
+                openModal('modal-penjualan');
+            } else if (type === 'incoming') {
+                editIncomingId = null;
+                document.getElementById('form-pemasukan').reset();
+                document.getElementById('pemasukan-date').value = new Date().toISOString().substring(0, 16);
+                document.getElementById('pemasukan-modal-title').innerHTML = '<i class="fa-solid fa-truck-field mr-2"></i>Catat Pasokan Stok Masuk';
+                document.getElementById('pemasukan-submit-btn').innerText = 'Simpan Stok Masuk';
+                openModal('modal-pemasukan');
+            }
+        }
+
+        function closeModal(id) {
+            const modal = document.getElementById(id);
+            modal.firstElementChild.classList.remove('scale-100');
+            modal.firstElementChild.classList.add('scale-95');
+            setTimeout(() => {
+                modal.classList.add('hidden');
+            }, 150);
+        }
+
+        function kalkulasiPenjualan() {
+            const size = document.getElementById('penjualan-size').value;
+            const qtyInput = document.getElementById('penjualan-qty');
+            const totalInput = document.getElementById('penjualan-total');
+
+            const pricePerUnit = size === 'Kecil' ? 100000 : 400000;
+            const qty = parseInt(qtyInput.value) || 0;
+            totalInput.value = qty * pricePerUnit;
+        }
+
+        // ==========================================
+        //  FUNGSI VIEW DETAIL (LIHAT)
+        // ==========================================
+        function viewDetail(type, id) {
+            let item = null;
+            let htmlContent = '';
+            let title = '';
+
+            if (type === 'sales') {
+                item = dataStore.sales.find(x => x.id === id);
+                title = 'Detail Penjualan Solar';
+                const volSetara = (item.size === 'Kecil' ? 8 : 30) * item.qty;
+                const hargaSatuan = item.size === 'Kecil' ? 100000 : 400000;
+                htmlContent = `
+                    <div class="space-y-3">
+                        <div class="flex justify-between border-b pb-2"><span class="text-slate-400">ID Transaksi</span><span class="font-bold text-slate-800">${item.id}</span></div>
+                        <div class="flex justify-between border-b pb-2"><span class="text-slate-400">Tanggal</span><span class="font-semibold text-slate-800">${new Date(item.date).toLocaleString('id-ID')}</span></div>
+                        <div class="flex justify-between border-b pb-2"><span class="text-slate-400">Kategori Solar</span><span class="font-bold text-amber-600">${item.type}</span></div>
+                        <div class="flex justify-between border-b pb-2"><span class="text-slate-400">Ukuran Jeriken</span><span class="font-bold text-slate-800">Jeriken ${item.size} (${item.size === 'Kecil' ? '8L' : '30L'})</span></div>
+                        <div class="flex justify-between border-b pb-2"><span class="text-slate-400">Jumlah Terjual</span><span class="font-bold text-slate-800">${item.qty} Unit</span></div>
+                        <div class="flex justify-between border-b pb-2"><span class="text-slate-400">Setara Volume</span><span class="font-bold text-slate-800">${volSetara.toLocaleString('id-ID')} Liter</span></div>
+                        <div class="flex justify-between border-b pb-2"><span class="text-slate-400">Harga per Unit</span><span class="font-semibold text-slate-800">${formatRupiah(hargaSatuan)}</span></div>
+                        <div class="flex justify-between border-b pb-2"><span class="text-slate-400">Total Pembayaran</span><span class="font-extrabold text-slate-900">${formatRupiah(item.total)}</span></div>
+                        <div class="flex justify-between pb-1"><span class="text-slate-400">Operator/Staff</span><span class="font-semibold text-slate-800">${item.staff}</span></div>
+                    </div>
+                `;
+            } else if (type === 'incoming') {
+                item = dataStore.incoming.find(x => x.id === id);
+                title = 'Detail Pemasukan Stok';
+                const qtyJeriken = item.qty || Math.round(item.volume / 30);
+                const volSetara = qtyJeriken * 30;
+                htmlContent = `
+                    <div class="space-y-3">
+                        <div class="flex justify-between border-b pb-2"><span class="text-slate-400">ID Pasokan</span><span class="font-bold text-slate-800">${item.id}</span></div>
+                        <div class="flex justify-between border-b pb-2"><span class="text-slate-400">Tanggal Masuk</span><span class="font-semibold text-slate-800">${new Date(item.date).toLocaleString('id-ID')}</span></div>
+                        <div class="flex justify-between border-b pb-2"><span class="text-slate-400">Kategori Solar</span><span class="font-bold text-blue-600">${item.type}</span></div>
+                        <div class="flex justify-between border-b pb-2"><span class="text-slate-400">Jumlah Pasok</span><span class="font-bold text-slate-800">${qtyJeriken.toLocaleString('id-ID')} Jeriken Besar</span></div>
+                        <div class="flex justify-between border-b pb-2"><span class="text-slate-400">Setara Volume</span><span class="font-bold text-slate-800">${volSetara.toLocaleString('id-ID')} Liter</span></div>
+                        <div class="flex justify-between border-b pb-2"><span class="text-slate-400">Total Biaya Kulakan</span><span class="font-extrabold text-slate-900">${formatRupiah(item.totalCost)}</span></div>
+                        <div class="flex justify-between pb-1"><span class="text-slate-400">Distributor/Supplier</span><span class="font-semibold text-slate-800">${item.supplier}</span></div>
+                    </div>
+                `;
+            }
+
+            document.getElementById('detail-modal-title').innerText = title;
+            document.getElementById('detail-modal-body').innerHTML = htmlContent;
+
+            const modal = document.getElementById('modal-detail');
+            modal.classList.remove('hidden');
+            setTimeout(() => {
+                modal.firstElementChild.classList.remove('scale-95');
+                modal.firstElementChild.classList.add('scale-100');
+            }, 50);
+        }
+
+        function closeDetailModal() {
+            const modal = document.getElementById('modal-detail');
+            modal.firstElementChild.classList.remove('scale-100');
+            modal.firstElementChild.classList.add('scale-95');
+            setTimeout(() => {
+                modal.classList.add('hidden');
+            }, 150);
+        }
+
+        // ==========================================
+        //  FUNGSI EDIT DATA (UBAH)
+        // ==========================================
+        function editItem(type, id) {
+            if (type === 'sales') {
+                editSalesId = id;
+                const item = dataStore.sales.find(x => x.id === id);
+                document.getElementById('penjualan-date').value = item.date;
+                document.getElementById('penjualan-type').value = item.type;
+                document.getElementById('penjualan-size').value = item.size || 'Kecil';
+                document.getElementById('penjualan-qty').value = item.qty;
+                document.getElementById('penjualan-total').value = item.total;
+                document.getElementById('penjualan-staff').value = item.staff;
+
+                document.getElementById('penjualan-modal-title').innerHTML = '<i class="fa-solid fa-pen-to-square mr-2"></i>Edit Transaksi Penjualan';
+                document.getElementById('penjualan-submit-btn').innerText = 'Update Transaksi';
+                openModal('modal-penjualan');
+            } else if (type === 'incoming') {
+                editIncomingId = id;
+                const item = dataStore.incoming.find(x => x.id === id);
+                document.getElementById('pemasukan-date').value = item.date;
+                document.getElementById('pemasukan-type').value = item.type;
+                
+                const qtyJeriken = item.qty || Math.round(item.volume / 30);
+                document.getElementById('pemasukan-qty').value = qtyJeriken;
+                document.getElementById('pemasukan-cost').value = item.totalCost;
+                document.getElementById('pemasukan-supplier').value = item.supplier;
+
+                document.getElementById('pemasukan-modal-title').innerHTML = '<i class="fa-solid fa-pen-to-square mr-2"></i>Edit Pasokan Stok';
+                document.getElementById('pemasukan-submit-btn').innerText = 'Update Stok Masuk';
+                openModal('modal-pemasukan');
+            }
+        }
+
+        // ==========================================
+        //  FUNGSI HAPUS CUSTOM (PEMBERANTAS BROWSER CONFIRM)
+        // ==========================================
+        function confirmDelete(type, id) {
+            deleteTarget = { type, id };
+            const modal = document.getElementById('modal-confirm');
+            modal.classList.remove('hidden');
+            setTimeout(() => {
+                modal.firstElementChild.classList.remove('scale-95');
+                modal.firstElementChild.classList.add('scale-100');
+            }, 50);
+        }
+
+        function closeConfirmModal() {
+            const modal = document.getElementById('modal-confirm');
+            modal.firstElementChild.classList.remove('scale-100');
+            modal.firstElementChild.classList.add('scale-95');
+            setTimeout(() => {
+                modal.classList.add('hidden');
+            }, 150);
+        }
+
+        function executeDelete() {
+            const { type, id } = deleteTarget;
+            if (type === 'sales') {
+                dataStore.sales = dataStore.sales.filter(x => x.id !== id);
+                renderTabelPenjualan();
+                showToast("Transaksi penjualan telah dihapus.");
+                saveToLocalStorage();
+                hitungStokDanDashboard();
+            } else if (type === 'incoming') {
+                dataStore.incoming = dataStore.incoming.filter(x => x.id !== id);
+                renderTabelPemasukan();
+                showToast("Data pasokan masuk berhasil dihapus.");
+                saveToLocalStorage();
+                hitungStokDanDashboard();
+            } else if (type === 'logout') {
+                // Tampilkan screen logout
+                const logoutScreen = document.getElementById('logout-screen');
+                logoutScreen.classList.remove('hidden');
+            }
+            
+            // Kembalikan teks konfirmasi modal ke default setelah tertutup
+            setTimeout(() => {
+                document.querySelector('#modal-confirm h3').innerText = "Konfirmasi Hapus";
+                document.querySelector('#modal-confirm p').innerText = "Apakah Anda yakin ingin menghapus data ini? Catatan yang dihapus tidak dapat dipulihkan kembali.";
+                const btn = document.querySelector('#modal-confirm button[onclick="executeDelete()"]');
+                if (btn) btn.innerText = "Ya, Hapus";
+            }, 300);
+
+            closeConfirmModal();
+        }
+
+        function logoutSistem() {
+            deleteTarget = { type: 'logout', id: null };
+            document.querySelector('#modal-confirm h3').innerText = "Konfirmasi Keluar";
+            document.querySelector('#modal-confirm p').innerText = "Apakah Anda yakin ingin keluar dari sistem admin Toko Solar Zeanara?";
+            const btn = document.querySelector('#modal-confirm button[onclick="executeDelete()"]');
+            if (btn) btn.innerText = "Ya, Keluar";
+            openModal('modal-confirm');
+        }
+
+        function loginKembali() {
+            const logoutScreen = document.getElementById('logout-screen');
+            logoutScreen.classList.add('hidden');
+            showToast("Selamat datang kembali di panel admin!");
+        }
+
+        // ==========================================
+        //  SUBMIT ACTION & INTEGRASI VALIDASI
+        // ==========================================
+        function submitPenjualan(e) {
+            e.preventDefault();
+            const date = document.getElementById('penjualan-date').value;
+            const type = document.getElementById('penjualan-type').value;
+            const size = document.getElementById('penjualan-size').value;
+            const qty = parseInt(document.getElementById('penjualan-qty').value);
+            const total = parseFloat(document.getElementById('penjualan-total').value);
+            const staff = document.getElementById('penjualan-staff').value;
+
+            const litersPerUnit = size === 'Kecil' ? 8 : 30;
+            const volumeLiters = qty * litersPerUnit; // Konversi liter
+
+            // VALIDASI STOK: Menghindari stok minus (Mengabaikan record saat ini jika sedang mengedit)
+            let sisaLiters = 0;
+            dataStore.incoming.filter(x => x.type === type).forEach(x => {
+                sisaLiters += x.qty ? (x.qty * 30) : x.volume;
+            });
+            dataStore.sales.filter(x => x.type === type && (editSalesId === null || x.id !== editSalesId)).forEach(x => {
+                const liters = (x.size === 'Kecil' ? 8 : 30) * x.qty;
+                sisaLiters -= liters;
+            });
+
+            if (volumeLiters > sisaLiters) {
+                showSystemAlert(`Gagal memproses transaksi! Stok penyimpanan ${type} tersisa ${sisaLiters.toLocaleString('id-ID')} Liter. Penjualan (${qty} Jeriken ${size} = ${volumeLiters} Liter) melebihi cadangan tangki.`);
+                return;
+            }
+
+            if (editSalesId !== null) {
+                // Update existing record
+                const idx = dataStore.sales.findIndex(x => x.id === editSalesId);
+                if (idx !== -1) {
+                    dataStore.sales[idx] = {
+                        ...dataStore.sales[idx],
+                        date, type, size, qty, total, staff
+                    };
+                }
+                editSalesId = null;
+                showToast("Transaksi penjualan berhasil diperbarui!");
+            } else {
+                // Tambah data baru
+                const newSale = {
+                    id: Date.now().toString(),
+                    date, type, size, qty, total, staff
+                };
+                dataStore.sales.unshift(newSale);
+                showToast(`Penjualan ${qty} Jeriken ${size} sukses disimpan!`);
+            }
+
+            saveToLocalStorage();
+            renderTabelPenjualan();
+            closeModal('modal-penjualan');
+            hitungStokDanDashboard();
+        }
+
+        function submitPemasukan(e) {
+            e.preventDefault();
+            const date = document.getElementById('pemasukan-date').value;
+            const type = document.getElementById('pemasukan-type').value;
+            const qty = parseInt(document.getElementById('pemasukan-qty').value);
+            const volume = qty * 30; // 30 Liter per Jeriken Besar
+            const totalCost = parseFloat(document.getElementById('pemasukan-cost').value);
+            const supplier = document.getElementById('pemasukan-supplier').value;
+
+            // VALIDASI TANGKI LUAP: Jangan melebihi batas tampung (Mengabaikan record saat ini jika sedang mengedit)
+            let sisaLiters = 0;
+            dataStore.incoming.filter(x => x.type === type && (editIncomingId === null || x.id !== editIncomingId)).forEach(x => {
+                sisaLiters += x.qty ? (x.qty * 30) : x.volume;
+            });
+            dataStore.sales.filter(x => x.type === type).forEach(x => {
+                const liters = (x.size === 'Kecil' ? 8 : 30) * x.qty;
+                sisaLiters -= liters;
+            });
+
+            if (sisaLiters + volume > MAX_TANK_CAPACITY) {
+                showSystemAlert(`Gagal memasok! Pengiriman solar sebesar ${qty} Jeriken Besar (${volume.toLocaleString('id-ID')} Liter) melebihi kapasitas kosong tangki ${type}. Sisa ruang kosong tangki: ${(MAX_TANK_CAPACITY - sisaLiters).toLocaleString('id-ID')} Liter.`);
+                return;
+            }
+
+            if (editIncomingId !== null) {
+                // Update existing record
+                const idx = dataStore.incoming.findIndex(x => x.id === editIncomingId);
+                if (idx !== -1) {
+                    dataStore.incoming[idx] = {
+                        ...dataStore.incoming[idx],
+                        date, type, qty, volume, totalCost, supplier
+                    };
+                }
+                editIncomingId = null;
+                showToast("Catatan pasokan stok berhasil diperbarui!");
+            } else {
+                // Tambah data baru
+                const newSupply = {
+                    id: Date.now().toString(),
+                    date, type, qty, volume, totalCost, supplier
+                };
+                dataStore.incoming.unshift(newSupply);
+                showToast(`Pemasukan solar sebanyak ${qty} Jeriken Besar (${volume.toLocaleString('id-ID')} L) sukses ditambahkan!`);
+            }
+
+            saveToLocalStorage();
+            renderTabelPemasukan();
+            closeModal('modal-pemasukan');
+            hitungStokDanDashboard();
+        }
+
+        // ==========================================
+        //  RENDER DATA TABEL
+        // ==========================================
+        function renderTabelPenjualan(filteredData = null) {
+            const container = document.getElementById('table-penjualan-body');
+            container.innerHTML = '';
+            
+            const list = filteredData || dataStore.sales;
+
+            if (list.length === 0) {
+                container.innerHTML = `<tr><td colspan="9" class="p-6 text-center text-slate-400 font-medium">Belum ada catatan penjualan solar</td></tr>`;
+                return;
+            }
+
+            list.forEach(item => {
+                const fDate = new Date(item.date).toLocaleString('id-ID', { dateStyle: 'medium', timeStyle: 'short' });
+                const badgeColor = 'bg-amber-50 text-amber-700 border-amber-200';
+                
+                const litersPerUnit = item.size === 'Kecil' ? 8 : 30;
+                const volumeSetara = item.qty * litersPerUnit;
+                const hargaSatuan = item.size === 'Kecil' ? 100000 : 400000;
+
+                container.innerHTML += `
+                    <tr class="hover:bg-slate-50/80 transition">
+                        <td class="p-4 font-medium text-slate-900">${fDate}</td>
+                        <td class="p-4">
+                            <span class="px-2.5 py-1 text-xs font-semibold border rounded-full ${badgeColor}">${item.type}</span>
+                        </td>
+                        <td class="p-4">
+                            <span class="px-2 py-0.5 text-xs font-bold bg-slate-100 text-slate-700 rounded-md">Jeriken ${item.size} (${litersPerUnit}L)</span>
+                        </td>
+                        <td class="p-4 font-bold text-slate-800">${item.qty} Unit</td>
+                        <td class="p-4 text-slate-600 font-semibold">${volumeSetara.toLocaleString('id-ID')} Liter</td>
+                        <td class="p-4 text-slate-500">${formatRupiah(hargaSatuan)}</td>
+                        <td class="p-4 font-bold text-slate-900">${formatRupiah(item.total)}</td>
+                        <td class="p-4 text-slate-600">${item.staff}</td>
+                        <td class="p-4 text-center">
+                            <div class="flex items-center justify-center space-x-2">
+                                <button onclick="viewDetail('sales', '${item.id}')" class="text-blue-500 hover:text-blue-700 p-1" title="Lihat"><i class="fa-solid fa-eye"></i></button>
+                                <button onclick="editItem('sales', '${item.id}')" class="text-amber-500 hover:text-amber-750 p-1" title="Edit"><i class="fa-solid fa-pen-to-square"></i></button>
+                                <button onclick="confirmDelete('sales', '${item.id}')" class="text-rose-500 hover:text-rose-700 p-1" title="Hapus"><i class="fa-solid fa-trash"></i></button>
+                            </div>
+                        </td>
+                    </tr>
+                `;
+            });
+        }
+
+        function filterPenjualan() {
+            const query = document.getElementById('search-penjualan').value.toLowerCase();
+            const res = dataStore.sales.filter(item => 
+                item.type.toLowerCase().includes(query) ||
+                (item.size && item.size.toLowerCase().includes(query)) ||
+                item.staff.toLowerCase().includes(query) ||
+                item.date.includes(query)
+            );
+            renderTabelPenjualan(res);
+        }
+
+        // ==========================================
+        //  RENDER DATA TABEL PEMASUKAN
+        // ==========================================
+        function renderTabelPemasukan(filteredData = null) {
+            const container = document.getElementById('table-pemasukan-body');
+            container.innerHTML = '';
+            
+            const list = filteredData || dataStore.incoming;
+
+            if (list.length === 0) {
+                container.innerHTML = `<tr><td colspan="7" class="p-6 text-center text-slate-400 font-medium">Belum ada riwayat stok solar masuk</td></tr>`;
+                return;
+            }
+
+            list.forEach(item => {
+                const fDate = new Date(item.date).toLocaleString('id-ID', { dateStyle: 'medium', timeStyle: 'short' });
+                const badgeColor = 'bg-amber-50 text-amber-700 border-amber-200';
+                
+                const qtyJeriken = item.qty || Math.round(item.volume / 30);
+                const volumeSetara = qtyJeriken * 30;
+
+                container.innerHTML += `
+                    <tr class="hover:bg-slate-50/80 transition">
+                        <td class="p-4 font-medium text-slate-900">${fDate}</td>
+                        <td class="p-4">
+                            <span class="px-2.5 py-1 text-xs font-semibold border rounded-full ${badgeColor}">${item.type}</span>
+                        </td>
+                        <td class="p-4 font-bold text-slate-800">${qtyJeriken.toLocaleString('id-ID')} Jeriken Besar</td>
+                        <td class="p-4 text-slate-600 font-semibold">${volumeSetara.toLocaleString('id-ID')} Liter</td>
+                        <td class="p-4 font-bold text-slate-900">${formatRupiah(item.totalCost)}</td>
+                        <td class="p-4 text-slate-600">${item.supplier}</td>
+                        <td class="p-4 text-center">
+                            <div class="flex items-center justify-center space-x-2">
+                                <button onclick="viewDetail('incoming', '${item.id}')" class="text-blue-500 hover:text-blue-700 p-1" title="Lihat"><i class="fa-solid fa-eye"></i></button>
+                                <button onclick="editItem('incoming', '${item.id}')" class="text-amber-500 hover:text-amber-750 p-1" title="Edit"><i class="fa-solid fa-pen-to-square"></i></button>
+                                <button onclick="confirmDelete('incoming', '${item.id}')" class="text-rose-500 hover:text-rose-700 p-1" title="Hapus"><i class="fa-solid fa-trash"></i></button>
+                            </div>
+                        </td>
+                    </tr>
+                `;
+            });
+        }
+
+        function filterPemasukan() {
+            const query = document.getElementById('search-pemasukan').value.toLowerCase();
+            const res = dataStore.incoming.filter(item => 
+                item.type.toLowerCase().includes(query) ||
+                item.supplier.toLowerCase().includes(query) ||
+                item.date.includes(query)
+            );
+            renderTabelPemasukan(res);
+        }
+
+        // ==========================================
+        //  TAB LAPORAN & NERACA KEUANGAN
+        // ==========================================
+        function generateReport() {
+            const startStr = document.getElementById('report-start-date').value;
+            const endStr = document.getElementById('report-end-date').value;
+
+            if (!startStr || !endStr) {
+                showSystemAlert("Harap lengkapi rentang tanggal laporan mulai dan akhir!");
+                return;
+            }
+
+            const start = new Date(startStr + 'T00:00:00');
+            const end = new Date(endStr + 'T23:59:59');
+
+            const dateOpt = { day: 'numeric', month: 'long', year: 'numeric' };
+            document.getElementById('report-period-text').innerText = `Periode: ${start.toLocaleDateString('id-ID', dateOpt)} - ${end.toLocaleDateString('id-ID', dateOpt)}`;
+
+            const filteredSales = dataStore.sales.filter(item => {
+                const d = new Date(item.date);
+                return d >= start && d <= end;
+            });
+
+            const filteredIncoming = dataStore.incoming.filter(item => {
+                const d = new Date(item.date);
+                return d >= start && d <= end;
+            });
+
+            let totSales = 0;
+            let sizeBreakdown = {
+                'Kecil': { qty: 0, val: 0, liters: 0 },
+                'Besar': { qty: 0, val: 0, liters: 0 }
+            };
+
+            filteredSales.forEach(s => {
+                totSales += s.total;
+                const size = s.size || 'Kecil';
+                const liters = (size === 'Kecil' ? 8 : 30) * s.qty;
+                if (sizeBreakdown[size]) {
+                    sizeBreakdown[size].qty += s.qty;
+                    sizeBreakdown[size].val += s.total;
+                    sizeBreakdown[size].liters += liters;
+                }
+            });
+
+            let totFuelPurchase = 0;
+            filteredIncoming.forEach(inc => {
+                totFuelPurchase += inc.totalCost;
+            });
+
+            const labaBersihReport = totSales - totFuelPurchase;
+
+            document.getElementById('rep-income').innerText = formatRupiah(totSales);
+            document.getElementById('rep-expense').innerText = formatRupiah(totFuelPurchase);
+            document.getElementById('rep-profit').innerText = formatRupiah(labaBersihReport);
+
+            const repProfitEl = document.getElementById('rep-profit');
+            if (labaBersihReport < 0) {
+                repProfitEl.parentElement.className = "bg-rose-50 p-4 rounded-xl border border-rose-100";
+                repProfitEl.className = "text-2xl font-extrabold text-rose-900";
+            } else {
+                repProfitEl.parentElement.className = "bg-amber-50 p-4 rounded-xl border border-amber-100";
+                repProfitEl.className = "text-2xl font-extrabold text-amber-900";
+            }
+
+            document.getElementById('rep-fuel-purchase-cost').innerText = formatRupiah(totFuelPurchase);
+
+            const breakdownContainer = document.getElementById('rep-fuel-breakdown');
+            breakdownContainer.innerHTML = '';
+            for (const [size, data] of Object.entries(sizeBreakdown)) {
+                breakdownContainer.innerHTML += `
+                    <div class="flex justify-between items-center text-sm p-2.5 bg-slate-50 rounded-lg">
+                        <div class="flex items-center space-x-2">
+                            <span class="w-3 h-3 rounded-full" style="background-color: ${size === 'Kecil' ? '#10b981' : '#a855f7'}"></span>
+                            <span class="text-slate-600 font-bold">Jeriken ${size} (${size === 'Kecil' ? '8L' : '30L'})</span>
+                        </div>
+                        <div class="text-right">
+                            <span class="font-bold text-slate-900 block">${formatRupiah(data.val)}</span>
+                            <span class="text-[10px] text-slate-500 font-semibold">${data.qty} Unit (${data.liters.toLocaleString('id-ID')} Liter)</span>
+                        </div>
+                    </div>
+                `;
+            }
+        }
+
+        function printReport() {
+            const printContent = document.getElementById('printable-area').innerHTML;
+            const originalContent = document.body.innerHTML;
+
+            document.body.innerHTML = `
+                <div style="padding: 40px; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;">
+                    ${printContent}
+                </div>
+            `;
+            window.print();
+            document.body.innerHTML = originalContent;
+            window.location.reload();
         }
     </script>
 </body>
